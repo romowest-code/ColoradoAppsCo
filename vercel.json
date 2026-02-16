@@ -1,6 +1,10 @@
 {
   "rewrites": [
     {
+      "source": "/",
+      "destination": "/ht/home.html"
+    },
+    {
       "source": "/ht/:path*",
       "destination": "/ht/:path*"
     }
