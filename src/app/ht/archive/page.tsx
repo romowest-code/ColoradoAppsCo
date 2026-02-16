@@ -21,7 +21,7 @@ export default function ArchivePage() {
         {weeks.map((week) => (
           <Link
             key={week.newsletter.week_date}
-            href="/"
+            href="/ht"
             className="block bg-surface-dark border border-border-dark rounded-xl p-5 hover:border-primary/30 transition-colors"
           >
             <div className="flex items-center justify-between mb-2">

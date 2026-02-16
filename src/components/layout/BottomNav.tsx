@@ -4,10 +4,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const tabs = [
-  { label: "Home", icon: "home", href: "/" },
-  { label: "Watchlist", icon: "visibility", href: "/watchlist" },
-  { label: "Signals", icon: "show_chart", href: "/signals" },
-  { label: "Archive", icon: "schedule", href: "/archive" },
+  { label: "Home", icon: "home", href: "/ht" },
+  { label: "Watchlist", icon: "visibility", href: "/ht/watchlist" },
+  { label: "Signals", icon: "show_chart", href: "/ht/signals" },
+  { label: "Archive", icon: "schedule", href: "/ht/archive" },
 ];
 
 export function SideNav() {
@@ -34,8 +34,8 @@ export function SideNav() {
       <nav className="flex-1 px-3 space-y-1">
         {tabs.map((tab) => {
           const isActive =
-            tab.href === "/"
-              ? pathname === "/"
+            tab.href === "/ht"
+              ? pathname === "/ht"
               : pathname.startsWith(tab.href);
 
           return (
@@ -80,8 +80,8 @@ export function MobileBottomNav() {
     <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-bg-dark border-t border-border-dark px-6 py-3 pb-7 flex justify-between items-center z-50">
       {tabs.map((tab) => {
         const isActive =
-          tab.href === "/"
-            ? pathname === "/"
+          tab.href === "/ht"
+            ? pathname === "/ht"
             : pathname.startsWith(tab.href);
 
         return (
