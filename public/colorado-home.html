@@ -232,7 +232,7 @@
         /* Featured Product Section */
         .featured-product {
             padding: 4rem 2rem;
-            background: linear-gradient(135deg, #065f46 0%, #047857 100%);
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
         }
 
         .featured-container {
@@ -316,7 +316,7 @@
             align-items: center;
             gap: 0.5rem;
             background: var(--white);
-            color: #047857;
+            color: #1a1a2e;
             padding: 1rem 2rem;
             border-radius: 10px;
             font-weight: 600;
@@ -329,6 +329,23 @@
             box-shadow: 0 10px 40px rgba(0,0,0,0.2);
         }
 
+        .featured-cta-outline {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid rgba(255,255,255,0.5);
+        }
+
+        .featured-cta-outline:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: var(--white);
+        }
+
+        .featured-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
         .featured-visual {
             display: flex;
             justify-content: center;
@@ -337,16 +354,16 @@
         .app-mockup {
             width: 300px;
             height: 600px;
-            background: linear-gradient(145deg, #1f2937, #374151);
+            background: linear-gradient(145deg, #0d1b2a, #1b2838);
             border-radius: 40px;
             padding: 12px;
-            box-shadow: 0 50px 100px rgba(0,0,0,0.3);
+            box-shadow: 0 50px 100px rgba(0,0,0,0.4);
         }
 
         .app-screen {
             width: 100%;
             height: 100%;
-            background: linear-gradient(180deg, #10b981, #059669);
+            background: linear-gradient(180deg, #16213e, #0f3460);
             border-radius: 30px;
             display: flex;
             flex-direction: column;
@@ -355,6 +372,7 @@
             color: var(--white);
             text-align: center;
             padding: 2rem;
+            overflow: hidden;
         }
 
         .app-screen .app-logo {
@@ -367,7 +385,7 @@
             align-items: center;
             justify-content: center;
             font-size: 2.5rem;
-            color: #059669;
+            color: #0f3460;
             font-weight: 800;
         }
 
@@ -1008,22 +1026,22 @@
             <div class="featured-content">
                 <span class="featured-badge">⭐ Featured Product</span>
                 <h2>Construction Money</h2>
-                <p class="tagline">Business Management for Solo Contractors</p>
-                <p>The affordable, AI-powered app built specifically for independent contractors and small construction businesses. Create professional estimates in seconds, send invoices, track jobs, and manage your entire business from your phone—without the complexity or high costs of enterprise software.</p>
-                <div class="featured-price">$9.99<span>/month</span></div>
+                <p class="tagline">80% of the must-have features of the expensive apps for 1/4th the cost</p>
+                <p>The affordable, AI-powered app built specifically for independent contractors and small construction businesses. Turn messy job notes into professional estimates in minutes, send invoices, track jobs, follow up with leads, and manage your entire business from your phone—without the complexity or high costs of enterprise software.</p>
+                <div class="featured-price">$19.99<span>/month</span></div>
                 <p class="featured-trial">14-day free trial available. See app for current promotions.</p>
                 <ul class="featured-features">
                     <li>
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <polyline points="20 6 9 17 4 12"/>
                         </svg>
-                        AI-powered estimate generation
+                        AI-powered estimate generation from job notes
                     </li>
                     <li>
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <polyline points="20 6 9 17 4 12"/>
                         </svg>
-                        Professional invoicing & payments
+                        Professional invoicing & payment tracking
                     </li>
                     <li>
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1035,22 +1053,46 @@
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <polyline points="20 6 9 17 4 12"/>
                         </svg>
-                        Built for contractors, by contractors
+                        Lead follow-up & quote management
+                    </li>
+                    <li>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                        Automated review management
+                    </li>
+                    <li>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                        Built for contractors, by a contractor
+                    </li>
+                    <li>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                        QuickBooks integrations
                     </li>
                 </ul>
-                <a href="https://constructionmoney.app" class="featured-cta" target="_blank">
-                    Learn More
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M5 12h14M12 5l7 7-7 7"/>
-                    </svg>
-                </a>
+                <div class="featured-buttons">
+                    <a href="https://c-money.app" class="featured-cta" target="_blank">
+                        The Community
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                    <a href="https://trades.c-money.app" class="featured-cta featured-cta-outline" target="_blank">
+                        The App
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                </div>
             </div>
             <div class="featured-visual">
                 <div class="app-mockup">
-                    <div class="app-screen">
-                        <div class="app-logo">C$</div>
-                        <h3>Construction Money</h3>
-                        <p>Estimates • Invoices • Jobs</p>
+                    <div class="app-screen" style="padding: 0; background: #f5f5f5;">
+                        <img src="home-page.png" alt="Construction Money App Home Screen" style="width: 100%; height: 100%; object-fit: cover; border-radius: 30px;">
                     </div>
                 </div>
             </div>
@@ -1437,7 +1479,7 @@
                     Cancellation Policy
                 </h2>
 
-                <p>This policy applies to subscription services offered by Colorado Apps Co., including the Construction Money app ($9.99/month).</p>
+                <p>This policy applies to subscription services offered by Colorado Apps Co., including the Construction Money app ($19.99/month).</p>
 
                 <h3>Subscription Terms</h3>
                 <div class="legal-highlight">
