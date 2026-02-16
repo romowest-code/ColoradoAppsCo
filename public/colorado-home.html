@@ -472,6 +472,35 @@
             line-height: 1.7;
         }
 
+        .service-card a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .service-card a h3 {
+            transition: color 0.3s;
+        }
+
+        .service-card a h3:hover {
+            color: var(--primary);
+        }
+
+        .service-card .learn-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            text-decoration: none;
+            transition: gap 0.3s;
+        }
+
+        .service-card .learn-more:hover {
+            gap: 0.5rem;
+        }
+
         /* Why Choose Us */
         .why-us {
             padding: 6rem 2rem;
@@ -1116,6 +1145,7 @@
                     </div>
                     <h3>iOS App Development</h3>
                     <p>Native iPhone and iPad applications built with Swift and SwiftUI for optimal performance and seamless user experience.</p>
+                    <a href="ios-app-development.html" class="learn-more">Learn More &rarr;</a>
                 </div>
                 <div class="service-card">
                     <div class="service-icon">
@@ -1126,6 +1156,7 @@
                     </div>
                     <h3>Android App Development</h3>
                     <p>Powerful Android applications using Kotlin and Jetpack Compose, optimized for the diverse Android ecosystem.</p>
+                    <a href="android-app-development.html" class="learn-more">Learn More &rarr;</a>
                 </div>
                 <div class="service-card">
                     <div class="service-icon">
@@ -1137,6 +1168,7 @@
                     </div>
                     <h3>Web Applications</h3>
                     <p>Responsive, scalable web apps using modern frameworks like React, Vue, and Node.js that work on any device.</p>
+                    <a href="web-applications.html" class="learn-more">Learn More &rarr;</a>
                 </div>
                 <div class="service-card">
                     <div class="service-icon">
@@ -1148,6 +1180,7 @@
                     </div>
                     <h3>Cross-Platform Apps</h3>
                     <p>Build once, deploy everywhere with React Native and Flutter for cost-effective multi-platform solutions.</p>
+                    <a href="cross-platform-apps.html" class="learn-more">Learn More &rarr;</a>
                 </div>
                 <div class="service-card">
                     <div class="service-icon">
@@ -1158,6 +1191,7 @@
                     </div>
                     <h3>UI/UX Design</h3>
                     <p>Beautiful, intuitive interfaces designed with your users in mind. We create experiences people love to use.</p>
+                    <a href="ui-ux-design.html" class="learn-more">Learn More &rarr;</a>
                 </div>
                 <div class="service-card">
                     <div class="service-icon">
@@ -1168,6 +1202,7 @@
                     </div>
                     <h3>API Development</h3>
                     <p>Robust backend systems and APIs that power your applications with security, speed, and reliability.</p>
+                    <a href="api-development.html" class="learn-more">Learn More &rarr;</a>
                 </div>
                 <div class="service-card">
                     <div class="service-icon">
@@ -1179,6 +1214,7 @@
                     </div>
                     <h3>AI & Vibe Coding</h3>
                     <p>Harness the power of Artificial Intelligence and rapid Vibe Coding methodology to build apps 10x faster with intelligent automation and smart features.</p>
+                    <a href="ai-vibe-coding.html" class="learn-more">Learn More &rarr;</a>
                 </div>
                 <div class="service-card">
                     <div class="service-icon">
@@ -1189,6 +1225,7 @@
                     </div>
                     <h3>AI-Enhanced Features</h3>
                     <p>Integrate smart AI capabilities into your app: chatbots, recommendation engines, image recognition, natural language processing, and predictive analytics.</p>
+                    <a href="ai-enhanced-features.html" class="learn-more">Learn More &rarr;</a>
                 </div>
             </div>
         </div>
@@ -1339,7 +1376,11 @@
                     </ul>
                 </div>
                 <div class="contact-form">
-                    <form action="#" method="POST">
+                    <form action="https://formsubmit.co/support@coloradoappsco.com" method="POST">
+                        <input type="hidden" name="_subject" value="New Project Inquiry from ColoradoAppsCo.com">
+                        <input type="hidden" name="_captcha" value="true">
+                        <input type="hidden" name="_next" value="https://coloradoappsco.com#contact">
+                        <input type="text" name="_honey" style="display:none">
                         <div class="form-group">
                             <label for="name">Your Name</label>
                             <input type="text" id="name" name="name" placeholder="John Smith" required>
