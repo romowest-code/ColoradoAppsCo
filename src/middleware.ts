@@ -6,7 +6,7 @@ const COOKIE_NAME = "site-auth";
 
 export function middleware(request: NextRequest) {
   // Allow the login API route through
-  if (request.nextUrl.pathname === "/api/login") {
+  if (request.nextUrl.pathname === "/ht/api/login") {
     return NextResponse.next();
   }
 
@@ -96,7 +96,7 @@ export function middleware(request: NextRequest) {
     document.getElementById('form').addEventListener('submit', async (e) => {
       e.preventDefault();
       const pw = document.getElementById('pw').value;
-      const res = await fetch('/api/login', {
+      const res = await fetch('/ht/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ password: pw })
@@ -120,5 +120,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
+  matcher: ["/ht/:path*"],
 };

@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/ht/:path*",
+      "destination": "/ht/:path*"
+    }
+  ]
+}
