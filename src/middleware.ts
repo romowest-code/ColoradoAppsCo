@@ -5,8 +5,11 @@ const SITE_PASSWORD = process.env.SITE_PASSWORD || "humbledtrader2026";
 const COOKIE_NAME = "site-auth";
 
 export function middleware(request: NextRequest) {
-  // Allow the login API route through
-  if (request.nextUrl.pathname === "/ht/api/login") {
+  // Allow the login API route and Twilio webhook routes through
+  if (
+    request.nextUrl.pathname === "/ht/api/login" ||
+    request.nextUrl.pathname.startsWith("/api/twilio/")
+  ) {
     return NextResponse.next();
   }
 
@@ -120,5 +123,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/ht/:path*"],
+  matcher: ["/ht/:path*", "/messages/:path*"],
 };
