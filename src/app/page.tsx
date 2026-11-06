@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import {
   DoorTag,
@@ -16,7 +17,6 @@ import {
   Chip,
   Eyebrow,
   PanelBar,
-  Placeholder,
   Square,
   Stat,
   TextLink,
@@ -104,13 +104,17 @@ export default async function HomePage({
 
           <div className="grow-0 shrink basis-[330px] min-w-0 w-full">
             <div className="border-2 border-ink shadow-[8px_8px_0_#1a1a17] bg-panel">
-              <PanelBar name="MROD.MP4" right="GEN X · DENVER" />
-              <Placeholder
-                dark
-                minHeight={380}
-                label="[ YOUR PHOTO ]"
-                note="Chest-up, real desk, warm window light. Looking at the camera. Not a stock headshot — this is the whole brand."
-              />
+              <PanelBar name="MROD.JPG" right="GEN X · DENVER" />
+              <div className="relative w-full h-[420px]">
+                <Image
+                  src="/mrod-hero.jpg"
+                  alt="Michael Rodriguez at his desk in Denver, coffee in hand"
+                  fill
+                  priority
+                  sizes="(max-width: 900px) 100vw, 400px"
+                  className="object-cover object-top"
+                />
+              </div>
             </div>
             <p className="mt-4.5 font-label text-xs leading-[1.8] tracking-[0.04em] text-ink-3">
               Colorado Apps Co. builds the apps.
