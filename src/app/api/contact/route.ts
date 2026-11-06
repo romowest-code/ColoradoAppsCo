@@ -1,7 +1,11 @@
 import { Resend } from "resend";
 import { NextResponse } from "next/server";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Built lazily: constructing Resend at module scope throws when the key is
+// absent, which breaks `next build` anywhere the secret isn't set.
+function client() {
+  return new Resend(process.env.RESEND_API_KEY);
+}
 
 export async function POST(request: Request) {
   try {
@@ -26,7 +30,7 @@ export async function POST(request: Request) {
       );
     }
 
-    await resend.emails.send({
+    await client().emails.send({
       from: "Colorado Apps Co. <noreply@coloradoappsco.com>",
       to: ["support@coloradoappsco.com"],
       replyTo: email,

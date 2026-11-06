@@ -1,21 +1,32 @@
-import Link from "next/link";
+import { Shell, SiteFooter, SiteHeader, Wrap } from "@/components/mrod/SiteChrome";
+import { Btn, Eyebrow } from "@/components/mrod/ui";
 
 export default function NotFound() {
   return (
-    <div className="max-w-2xl mx-auto p-6 flex flex-col items-center justify-center min-h-[60vh] text-center">
-      <span className="material-icons-round text-6xl text-primary mb-4">
-        search_off
-      </span>
-      <h2 className="text-2xl font-bold mb-2">Page Not Found</h2>
-      <p className="text-sm text-text-muted mb-6">
-        The page you&apos;re looking for doesn&apos;t exist.
-      </p>
-      <Link
-        href="/ht"
-        className="px-6 py-3 bg-primary text-bg-dark font-bold rounded-xl hover:bg-primary-light transition-colors"
-      >
-        Back to Home
-      </Link>
-    </div>
+    <Shell>
+      <SiteHeader />
+      <Wrap className="py-20 sm:py-28">
+        <div className="mb-5">
+          <Eyebrow>ERROR 404</Eyebrow>
+        </div>
+        <h1 className="font-head text-[clamp(40px,7vw,60px)] leading-[0.98] font-extrabold tracking-[-0.035em] mb-5">
+          That page isn&apos;t here.
+        </h1>
+        <p className="text-xl leading-[1.5] text-ink-5 max-w-[32em] mb-8">
+          Either I moved it or you typed it from memory. Both happen. Here are
+          the three doors that definitely work.
+        </p>
+        <div className="flex flex-wrap gap-3.5 items-center">
+          <Btn href="/">▶ BACK TO THE HOMEPAGE</Btn>
+          <Btn href="/app-lab" variant="paper">
+            THE APP LAB
+          </Btn>
+          <Btn href="/audit" variant="paper">
+            THE AUDIT
+          </Btn>
+        </div>
+      </Wrap>
+      <SiteFooter home />
+    </Shell>
   );
 }

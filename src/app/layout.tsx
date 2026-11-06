@@ -1,8 +1,32 @@
 import type { Metadata, Viewport } from "next";
-import { Manrope, JetBrains_Mono } from "next/font/google";
-import { AppShell } from "@/components/layout/AppShell";
+import {
+  Archivo,
+  IBM_Plex_Mono,
+  Inter,
+  JetBrains_Mono,
+  Manrope,
+} from "next/font/google";
 import "./globals.css";
 
+// Marketing site (/, /app-lab, /audit)
+const archivo = Archivo({
+  variable: "--font-archivo",
+  weight: ["600", "700", "800"],
+  subsets: ["latin"],
+});
+
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+});
+
+const plexMono = IBM_Plex_Mono({
+  variable: "--font-plex",
+  weight: ["400", "500", "600"],
+  subsets: ["latin"],
+});
+
+// Humbled Trader app (/ht)
 const manrope = Manrope({
   variable: "--font-display",
   subsets: ["latin"],
@@ -14,9 +38,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Humbled Trader — Weekend Watchlist",
+  title: "MRod — AI for the Rest of Us",
   description:
-    "Interactive weekly market analysis, watchlist ideas, and trading insights from Humbled Trader.",
+    "I find the busywork in your week and hand it to AI. Apps, audits and a weekly video for people who were already working before the internet showed up.",
 };
 
 export const viewport: Viewport = {
@@ -32,16 +56,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-        <link
-          href="https://fonts.googleapis.com/icon?family=Material+Icons+Round"
-          rel="stylesheet"
-        />
-      </head>
       <body
-        className={`${manrope.variable} ${jetbrainsMono.variable} font-display antialiased bg-bg-dark text-text-primary min-h-dvh`}
+        className={`${archivo.variable} ${inter.variable} ${plexMono.variable} ${manrope.variable} ${jetbrainsMono.variable} antialiased`}
       >
-        <AppShell>{children}</AppShell>
+        {children}
       </body>
     </html>
   );

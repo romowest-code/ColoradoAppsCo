@@ -50,3 +50,35 @@ body {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* ---------------------------------------------------------------
+   MRod — "AI for the Rest of Us" marketing site tokens
+   Paper + ink + Colorado orange. Used by /, /app-lab and /audit.
+   --------------------------------------------------------------- */
+@theme inline {
+  --color-paper: #ede3d1;
+  --color-paper-2: #f7f1e4;
+  --color-paper-3: #f2eada;
+  --color-ink: #1a1a17;
+  --color-ink-2: #302c26;
+  --color-ink-3: #57514a;
+  --color-ink-4: #44403a;
+  --color-ink-5: #2a2621;
+  --color-rule: #d6c9b2;
+  --color-rule-dashed: #8c8477;
+  --color-orange: #a33e17;
+  --color-orange-lit: #e8824b;
+  --color-live: #1f6b55;
+  --color-idea: #5b4aa8;
+  --color-panel: #1e1c18;
+  --color-panel-bar: #2a2721;
+  --color-panel-line: #4a463e;
+  --color-panel-field: #14130f;
+  --color-panel-text: #f3ede1;
+  --color-panel-text-2: #c9c1b4;
+  --color-panel-text-3: #8f877b;
+
+  --font-head: var(--font-archivo);
+  --font-body: var(--font-inter);
+  --font-label: var(--font-plex);
+}
