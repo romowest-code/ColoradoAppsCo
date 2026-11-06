@@ -112,7 +112,7 @@ export default async function HomePage({
                   fill
                   priority
                   sizes="(max-width: 900px) 100vw, 400px"
-                  className="object-cover object-top"
+                  className="object-cover object-top scale-x-[-1]"
                 />
               </div>
             </div>
