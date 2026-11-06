@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import {
   DoorTag,
   Shell,
@@ -234,26 +233,34 @@ export default async function HomePage({
               <DoorTag n="03" name="HIRE" tone="idea" />
               <div className="p-6 flex flex-col gap-4 grow">
                 <h3 className="font-head text-[26px] font-bold tracking-[-0.02em]">
-                  The AI automation audit
+                  Three hours, or it&apos;s free
                 </h3>
                 <p className="text-[15px] leading-[1.6] text-ink-4">
-                  Two weeks. I sit with your actual week, find the repeat work,
-                  and hand back the three jobs AI should be doing — built, not
-                  described.
+                  Give me one afternoon. I sit with your actual week, find the
+                  work that repeats, and build the fix while you watch. You
+                  leave with something running — not a report.
                 </p>
                 <div className="flex flex-col gap-2 font-label text-[13px] text-ink-2">
                   <div className="flex items-center gap-[9px]">
                     <Square tone="idea" size={8} />
-                    Field service company
+                    The quoting and the invoicing
                   </div>
                   <div className="flex items-center gap-[9px]">
                     <Square tone="idea" size={8} />
-                    Short-term rental operator
+                    The follow-up nobody gets to
+                  </div>
+                  <div className="flex items-center gap-[9px]">
+                    <Square tone="idea" size={8} />
+                    The report you rebuild every month
                   </div>
                 </div>
+                <p className="text-[15px] leading-[1.6] text-ink-4">
+                  Any business, any industry. If you don&apos;t walk away with
+                  time back every week, you don&apos;t pay.
+                </p>
                 <span className="grow" />
                 <TextLink href="/audit" tone="idea">
-                  SEE THE CASE STUDIES →
+                  SEE HOW IT WORKS →
                 </TextLink>
               </div>
             </article>
@@ -332,32 +339,6 @@ export default async function HomePage({
                 </div>
               </div>
             </div>
-          </div>
-        </Wrap>
-      </section>
-
-      {/* -------------------------------------------------- ai coffee */}
-      <section className="pb-[72px]">
-        <Wrap>
-          <div className="flex flex-wrap gap-6 items-center border-2 border-ink bg-paper-2 px-8 py-7">
-            <div className="grow min-w-0 basis-[420px]">
-              <div className="mb-2.5">
-                <Eyebrow boxed={false}>AI COFFEE · DENVER · MONTHLY</Eyebrow>
-              </div>
-              <h3 className="font-head text-[26px] font-bold tracking-[-0.02em] mb-2">
-                Bring your laptop and one annoying task
-              </h3>
-              <p className="text-base leading-[1.6] text-ink-4 max-w-[38em]">
-                An hour, in person, first [WEEKDAY] of the month at [VENUE].
-                Zoom link for everyone outside Colorado.
-              </p>
-            </div>
-            <Link
-              href="/#newsletter"
-              className="font-label text-[13px] font-semibold tracking-[0.06em] text-ink bg-paper border-2 border-ink shadow-[4px_4px_0_#1a1a17] px-5 py-3.5 no-underline inline-block focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
-            >
-              SAVE ME A SEAT
-            </Link>
           </div>
         </Wrap>
       </section>

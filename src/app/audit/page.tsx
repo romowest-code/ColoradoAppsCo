@@ -1,64 +1,55 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import {
   Shell,
   SiteFooter,
   SiteHeader,
   Wrap,
 } from "@/components/mrod/SiteChrome";
-import {
-  readSubscribeState,
-  SignupForm,
-} from "@/components/mrod/SignupForm";
+import { AuditForm, readAuditState } from "@/components/mrod/AuditForm";
 import { Btn, Eyebrow, PanelBar, Square, Stat } from "@/components/mrod/ui";
 
 export const metadata: Metadata = {
-  title: "The AI automation audit — MRod",
+  title: "Three hours, or it's free — MRod",
   description:
-    "Two weeks, fixed fee. I find the repeat work in your business and hand back three jobs AI should be doing — built and running, not written up in a deck.",
+    "Give me one afternoon. I find the work that repeats in your week and build the fix while you watch. Any business, any industry. If you don't leave with time back every week, you don't pay.",
 };
 
 const INCLUDED = [
-  "A 90-minute walk through your week, recorded",
+  "A walk through your actual week, recorded",
   "Every repeat task, timed and priced",
-  "Three of them built and running",
+  "One of them built and running before I leave",
   "A one-page handover your staff can follow",
-  "30 days of questions, answered",
+  "Two weeks of questions, answered",
 ];
 
-const TIMELINE = [
+const HOURS = [
   {
-    when: "DAY 1",
+    when: "HOUR 1",
     title: "The walk-through",
     body: "You show me a normal week. I ask annoying questions and write down every time you say “and then I just…”.",
   },
   {
-    when: "DAYS 2–4",
+    when: "HOUR 2",
     title: "The hour count",
-    body: "Every repeat task gets a time and a dollar figure. You see the list sorted by what it costs you.",
+    body: "Every repeat task gets a time and a dollar figure. We pick the one costing you the most and leave the rest on the list.",
   },
   {
-    when: "DAYS 5–9",
-    title: "Build the top three",
-    body: "Not a recommendation. Working automations, in your tools, with your data, that your staff can run on Monday.",
-  },
-  {
-    when: "DAY 10",
-    title: "Handover",
-    body: "One page, plain English, and a short video for whoever has to keep it running after I leave.",
+    when: "HOUR 3",
+    title: "Build it",
+    body: "Not a recommendation. One working automation, in your tools, with your data, that somebody can run tomorrow without me.",
   },
 ];
 
 const CASES = [
   {
-    tag: "CASE 01 · FIELD SERVICE",
+    tag: "EXAMPLE 01 · FIELD SERVICE",
     title: "[COMPANY TYPE], [N] trucks",
     before:
       "[The owner's evening routine — quotes typed twice, scheduling by text, invoices on Sunday night.]",
     after: "[What runs by itself now, and who touches it.]",
   },
   {
-    tag: "CASE 02 · SHORT-TERM RENTALS",
+    tag: "EXAMPLE 02 · SHORT-TERM RENTALS",
     title: "[N] properties, one operator",
     before:
       "[Guest messages answered by hand at 11pm, cleaner scheduling in a group chat, owner statements rebuilt every month.]",
@@ -69,16 +60,16 @@ const CASES = [
 export default async function AuditPage({
   searchParams,
 }: {
-  searchParams: Promise<{ subscribed?: string }>;
+  searchParams: Promise<{ sent?: string }>;
 }) {
-  const { subscribed } = await searchParams;
-  const state = readSubscribeState(subscribed);
+  const { sent } = await searchParams;
+  const state = readAuditState(sent);
 
   return (
     <Shell>
       <SiteHeader
         active="audit"
-        cta={{ href: "/audit#book", label: "BOOK A CALL" }}
+        cta={{ href: "/audit#book", label: "BOOK THE THREE HOURS" }}
       />
 
       {/* ------------------------------------------------------ hero */}
@@ -89,17 +80,23 @@ export default async function AuditPage({
               <Eyebrow tone="idea">03 / HIRE</Eyebrow>
             </div>
             <h1 className="font-head text-[clamp(40px,7vw,60px)] leading-[0.98] font-extrabold tracking-[-0.035em] mb-5">
-              Two weeks.
+              Three hours.
               <br />
               <span className="inline-block bg-orange text-white px-3.5 pt-0.5 pb-1.5 mt-2">
-                Three jobs gone.
+                Or it&apos;s free.
               </span>
             </h1>
             <p className="text-xl leading-[1.5] text-ink-5 max-w-[32em] mb-5.5">
-              I sit with your actual week — the quotes, the scheduling, the
-              invoices, the three spreadsheets nobody will admit to — find the
-              repeat work, and hand back the three jobs AI should be doing.
-              Built and running, not written up in a deck.
+              Give me one afternoon. I sit with your actual week — the quotes,
+              the scheduling, the invoices, the three spreadsheets nobody will
+              admit to — find the work that repeats, and build the fix while
+              you watch. You leave with something running, not a report.
+            </p>
+            <p className="text-lg leading-[1.55] text-ink-5 max-w-[32em] mb-5.5">
+              Any business, any industry. I don&apos;t need to know your trade
+              — you do, and that&apos;s the half that matters. If you
+              don&apos;t walk away with time back every week, you don&apos;t
+              pay.
             </p>
             <p className="text-base leading-[1.65] text-ink-3 max-w-[34em] border-l-[3px] border-idea pl-4">
               Twenty years of this at Oracle, Barclays and Amgen, where the
@@ -112,7 +109,7 @@ export default async function AuditPage({
             <div className="px-4.5 py-3 border-b-2 border-ink flex items-center gap-[9px]">
               <Square tone="idea" />
               <span className="font-label text-[11px] tracking-[0.12em] text-ink-2">
-                THE AUDIT
+                ONE AFTERNOON
               </span>
             </div>
             <div className="p-6">
@@ -120,7 +117,7 @@ export default async function AuditPage({
                 [$ PRICE]
               </div>
               <div className="font-label text-[11px] tracking-[0.1em] text-ink-3 mt-2 mb-5">
-                FIXED FEE · 2 WEEKS · 4 SEATS A MONTH
+                FLAT FEE · 3 HOURS · [N] SEATS A MONTH
               </div>
               <ul className="flex flex-col gap-3 text-sm leading-[1.5] text-ink-2 list-none p-0 m-0">
                 {INCLUDED.map((line) => (
@@ -134,7 +131,7 @@ export default async function AuditPage({
               </ul>
               <div className="mt-6">
                 <Btn href="/audit#book" block>
-                  BOOK A CALL
+                  BOOK THE THREE HOURS
                 </Btn>
               </div>
             </div>
@@ -142,15 +139,15 @@ export default async function AuditPage({
         </Wrap>
       </section>
 
-      {/* -------------------------------------------------- timeline */}
+      {/* ----------------------------------------------- the three hours */}
       <section className="pb-14">
         <Wrap>
           <div className="border-t-2 border-ink pt-7">
             <h2 className="font-head text-[32px] font-extrabold tracking-[-0.03em] mb-6">
-              How the two weeks go
+              How the three hours go
             </h2>
-            <div className="grid gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
-              {TIMELINE.map((step) => (
+            <div className="grid gap-5 grid-cols-1 md:grid-cols-3">
+              {HOURS.map((step) => (
                 <div
                   key={step.when}
                   className="border-2 border-ink bg-paper-2 p-5"
@@ -175,10 +172,10 @@ export default async function AuditPage({
       <section className="pb-14">
         <Wrap>
           <h2 className="font-head text-[32px] font-extrabold tracking-[-0.03em] mb-2">
-            Two I&apos;ve already done
+            Two businesses with nothing in common
           </h2>
           <p className="text-[17px] text-ink-3 mb-6.5">
-            Same method, different trucks.
+            Different trades, different tools, same three hours.
           </p>
           <div className="flex flex-wrap gap-6">
             {CASES.map((c) => (
@@ -229,40 +226,31 @@ export default async function AuditPage({
       <section id="book" className="pb-16 scroll-mt-8">
         <Wrap>
           <div className="border-2 border-ink shadow-[10px_10px_0_#a33e17] bg-panel">
-            <PanelBar name="START-HERE.TXT" right="[N] SEATS LEFT THIS MONTH" />
+            <PanelBar name="BOOK-THE-AUDIT" right="[N] SEATS LEFT THIS MONTH" />
             <div className="p-6 sm:p-10 flex flex-wrap gap-10 items-start">
-              <div className="grow min-w-0 basis-[420px]">
+              <div className="grow min-w-0 basis-[440px]">
                 <h2 className="font-head text-[clamp(30px,5vw,38px)] leading-[1.04] font-extrabold tracking-[-0.03em] text-panel-text mb-3.5">
-                  Not ready to hire anyone? Start free.
+                  Tell me what eats your week
                 </h2>
                 <p className="text-lg leading-[1.55] text-panel-text-2 max-w-[32em] mb-6">
-                  Do the 15-Hour Audit yourself. It&apos;s the same first
-                  question I&apos;d ask you, on a printable page. If the answer
-                  scares you, book the call.
+                  No form letter back. I read these myself, and if three hours
+                  with me won&apos;t help you, I&apos;ll say so and tell you
+                  what would.
                 </p>
-                <SignupForm
-                  id="audit-email"
-                  source="audit"
-                  next="/audit?subscribed=1#book"
-                  state={state}
-                  label="SEND THE CHECKLIST"
-                />
+                <AuditForm state={state} />
               </div>
 
               <div className="grow-0 shrink basis-[250px] min-w-0 w-full border-2 border-panel-line p-5.5">
                 <div className="font-label text-[11px] tracking-[0.12em] text-panel-text-3 mb-3.5">
-                  OR SKIP AHEAD
+                  NOT READY YET?
                 </div>
                 <p className="text-[15px] leading-[1.6] text-[#d8d1c5] mb-4.5">
-                  A 20-minute call. I&apos;ll tell you straight whether an audit
-                  is worth it for your business.
+                  Do the 15-Hour Audit yourself first. It&apos;s the same
+                  opening question, on a printable page, and it costs nothing.
                 </p>
-                <Link
-                  href="/#newsletter"
-                  className="block text-center font-label text-[13px] font-semibold tracking-[0.05em] text-ink bg-paper border-2 border-panel-text px-3.5 py-3.5 no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-lit"
-                >
-                  PICK A TIME
-                </Link>
+                <Btn href="/#newsletter" variant="paper" block>
+                  GET THE CHECKLIST
+                </Btn>
               </div>
             </div>
           </div>
