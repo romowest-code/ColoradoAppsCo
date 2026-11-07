@@ -114,10 +114,10 @@ export default async function AuditPage({
             </div>
             <div className="p-6">
               <div className="font-head text-[40px] font-extrabold tracking-[-0.03em] leading-none">
-                [$ PRICE]
+                $750
               </div>
               <div className="font-label text-[11px] tracking-[0.1em] text-ink-3 mt-2 mb-5">
-                FLAT FEE · 3 HOURS · [N] SEATS A MONTH
+                FLAT FEE · 3 HOURS · 4 SEATS A MONTH
               </div>
               <ul className="flex flex-col gap-3 text-sm leading-[1.5] text-ink-2 list-none p-0 m-0">
                 {INCLUDED.map((line) => (
@@ -226,7 +226,7 @@ export default async function AuditPage({
       <section id="book" className="pb-16 scroll-mt-8">
         <Wrap>
           <div className="border-2 border-ink shadow-[10px_10px_0_#a33e17] bg-panel">
-            <PanelBar name="BOOK-THE-AUDIT" right="[N] SEATS LEFT THIS MONTH" />
+            <PanelBar name="BOOK-THE-AUDIT" right="4 SEATS A MONTH" />
             <div className="p-6 sm:p-10 flex flex-wrap gap-10 items-start">
               <div className="grow min-w-0 basis-[440px]">
                 <h2 className="font-head text-[clamp(30px,5vw,38px)] leading-[1.04] font-extrabold tracking-[-0.03em] text-panel-text mb-3.5">
