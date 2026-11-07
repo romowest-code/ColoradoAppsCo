@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import {
   Shell,
   SiteFooter,
@@ -165,7 +166,7 @@ export default function AppLabPage() {
                 THE-INCOME-STACK
               </span>
               <span className="font-label text-xs tracking-[0.1em] text-ink-3">
-                [N] ON THE LIST
+                FREE WHILE IT&apos;S IN THE OPEN
               </span>
             </div>
             <div className="p-7 flex flex-wrap gap-8">
@@ -180,31 +181,38 @@ export default function AppLabPage() {
                   slide across the screen.
                 </p>
                 <div className="border-2 border-ink bg-paper px-4.5 py-4 mb-5">
-                  <div className="font-label text-[11px] tracking-[0.12em] text-ink-3 mb-2.5">
-                    WHAT IT SAVES
+                  <div className="font-label text-[11px] tracking-[0.12em] text-ink-3 mb-3">
+                    WHAT&apos;S IN IT
                   </div>
-                  <p className="font-label text-[13px] leading-[1.7] text-ink-2">
-                    The $[X] meeting you were going to pay for, and the twenty
-                    years of not knowing.
-                  </p>
+                  <div className="flex flex-wrap gap-6">
+                    <Stat size="md" value="7" label="INCOME STREAMS" />
+                    <Stat size="md" value="8" label="WHAT-IF SWITCHES" />
+                    <Stat size="md" value="867" label="CAREERS TRACKED" />
+                  </div>
                 </div>
                 <div className="flex flex-wrap gap-3.5 items-center">
-                  <Btn href="/#newsletter">TRY THE BETA</Btn>
+                  <Btn href="https://instack.app" external>
+                    OPEN THE APP
+                  </Btn>
                   <TextLink href="/#learn">BUILD LOG →</TextLink>
                 </div>
               </div>
               <div className="grow-0 shrink basis-[240px] min-w-0 w-full">
-                <Placeholder
-                  minHeight={200}
-                  label="[ APP SCREENSHOT ]"
-                  note={
-                    <>
-                      The what-if panel,
-                      <br />
-                      mid-slide.
-                    </>
-                  }
-                />
+                <a
+                  href="https://instack.app"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block border-2 border-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
+                >
+                  <Image
+                    src="/income-stack.jpg"
+                    alt="The Income Stack on instack.app: the what-if simulator and career picker"
+                    width={800}
+                    height={540}
+                    sizes="(max-width: 900px) 100vw, 400px"
+                    className="w-full h-auto"
+                  />
+                </a>
               </div>
             </div>
           </article>

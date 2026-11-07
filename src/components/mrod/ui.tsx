@@ -164,16 +164,22 @@ export function Btn({
   href,
   variant = "ink",
   block = false,
+  external = false,
   children,
 }: {
   href: string;
   variant?: Variant;
   block?: boolean;
+  /** Opens in a new tab — for links that leave the site, like the apps. */
+  external?: boolean;
   children: React.ReactNode;
 }) {
   return (
     <Link
       href={href}
+      {...(external
+        ? { target: "_blank", rel: "noopener noreferrer" }
+        : {})}
       className={`font-label text-sm font-semibold tracking-[0.05em] border-2 px-[22px] py-[15px] no-underline ${
         block ? "block text-center" : "inline-block"
       } ${VARIANT[variant]} ${PRESS} ${FOCUS}`}
