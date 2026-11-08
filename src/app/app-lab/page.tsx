@@ -10,7 +10,6 @@ import {
   Btn,
   Chip,
   Eyebrow,
-  Placeholder,
   Stat,
   TextLink,
 } from "@/components/mrod/ui";
@@ -112,7 +111,7 @@ export default function AppLabPage() {
                 CONTRACTOR-MONEY
               </span>
               <span className="font-label text-xs tracking-[0.1em] text-ink-3">
-                SHIPPED [MONTH YEAR]
+                NOW LIVE — ALL TRADES
               </span>
             </div>
             <div className="p-7 flex flex-wrap gap-8">
@@ -134,26 +133,43 @@ export default function AppLabPage() {
                     label="SAVED / WEEK / USER"
                   />
                   <Stat size="md" value="$3K" label="MRR" />
-                  <Stat size="md" value="[$X]" label="COST TO BUILD" />
+                  <Stat size="md" value="$19.99" label="A MONTH TO USE IT" />
+                </div>
+                <div className="border-2 border-ink bg-paper px-4.5 py-4 mt-5">
+                  <div className="font-label text-[11px] tracking-[0.12em] text-ink-3 mb-3">
+                    WHAT&apos;S IN IT
+                  </div>
+                  <div className="flex flex-wrap gap-6">
+                    <Stat size="md" value="8" label="FEATURES, NO TIERS" />
+                    <Stat size="md" value="80+" label="TRADE PRICE BOOKS" />
+                    <Stat size="md" value="0%" label="PLATFORM FEES" />
+                  </div>
                 </div>
                 <div className="flex flex-wrap gap-3.5 items-center mt-5">
-                  <Btn href="/#newsletter">OPEN THE APP</Btn>
+                  <Btn href="https://c-money.app" external>
+                    OPEN THE APP
+                  </Btn>
                   <TextLink href="/#learn" tone="live">
                     HOW I BUILT IT →
                   </TextLink>
                 </div>
               </div>
               <div className="grow-0 shrink basis-[240px] min-w-0 w-full">
-                <Placeholder
-                  label="[ APP SCREENSHOT ]"
-                  note={
-                    <>
-                      Real screen, real numbers.
-                      <br />
-                      No device mockup frame.
-                    </>
-                  }
-                />
+                <a
+                  href="https://c-money.app"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block border-2 border-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange"
+                >
+                  <Image
+                    src="/contractor-money.jpg"
+                    alt="Contractor Money on c-money.app: AI estimates, invoicing and scheduling for solo contractors"
+                    width={778}
+                    height={523}
+                    sizes="(max-width: 900px) 100vw, 400px"
+                    className="w-full h-auto"
+                  />
+                </a>
               </div>
             </div>
           </article>
