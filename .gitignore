@@ -40,3 +40,7 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 .env*.local
+
+# macOS resource forks (this repo lives on an exFAT volume)
+._*
+.DS_Store

@@ -82,3 +82,53 @@ body {
   --font-body: var(--font-inter);
   --font-label: var(--font-plex);
 }
+
+/* ---------------------------------------------- the 15-Hour Audit
+   The sweep on the "working" bar, and the print rules that turn a
+   finished audit into something worth putting on the kitchen table.
+   -------------------------------------------------------------- */
+
+@keyframes audit-sweep {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(300%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-\[audit-sweep_1\.4s_ease-in-out_infinite\] {
+    animation: none;
+    width: 100%;
+    opacity: 0.4;
+  }
+}
+
+@media print {
+  html,
+  body {
+    background: #ffffff;
+    color: #000000;
+  }
+
+  /* Hard shadows are a screen device — they cost toner and read as smudge. */
+  * {
+    box-shadow: none !important;
+  }
+
+  a[href]::after {
+    content: "";
+  }
+
+  /* Don't split a finding across a page break. */
+  article,
+  .break-inside-avoid {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  @page {
+    margin: 16mm;
+  }
+}

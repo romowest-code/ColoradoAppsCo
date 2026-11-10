@@ -31,7 +31,7 @@ export function Wrap({
 
 export function SiteHeader({
   active = null,
-  cta = { href: "/#newsletter", label: "GET THE 15-HOUR AUDIT" },
+  cta = { href: "/15-hour-audit", label: "GET THE 15-HOUR AUDIT" },
 }: {
   active?: Section;
   cta?: { href: string; label: string };

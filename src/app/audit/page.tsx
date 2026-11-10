@@ -245,11 +245,12 @@ export default async function AuditPage({
                   NOT READY YET?
                 </div>
                 <p className="text-[15px] leading-[1.6] text-[#d8d1c5] mb-4.5">
-                  Do the 15-Hour Audit yourself first. It&apos;s the same
-                  opening question, on a printable page, and it costs nothing.
+                  Do the 15-Hour Audit yourself first. Eight questions about
+                  your week, and you get your own list back. Free, and no
+                  email needed to read it.
                 </p>
-                <Btn href="/#newsletter" variant="paper" block>
-                  GET THE CHECKLIST
+                <Btn href="/15-hour-audit" variant="paper" block>
+                  START THE FREE AUDIT
                 </Btn>
               </div>
             </div>

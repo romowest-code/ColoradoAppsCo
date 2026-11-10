@@ -44,6 +44,14 @@ const PROOF_CELL = [
   "border-t-2 border-l-2 border-rule pt-6 pl-5 lg:border-t-0 lg:pl-6 lg:pt-6",
 ];
 
+// Swap these three each week when a new video goes up. The thumbnail is
+// saved into public/ from YouTube's maxresdefault.jpg for the video.
+const LATEST_VIDEO = {
+  url: "https://www.youtube.com/watch?v=L5HJvn_Yl7s&t=15s",
+  thumb: "/video-ai-built-my-pnl.jpg",
+  title: "I Copied My Business Accounts Into AI for My Year-End P&L",
+};
+
 const COMPANIES = [
   "Oracle / FatWire",
   "Sun Microsystems",
@@ -95,10 +103,33 @@ export default async function HomePage({
 
             <div className="flex flex-wrap gap-3.5 items-center">
               <Btn href="/#newsletter">▶ START WITH THE FREE AUDIT</Btn>
-              <Btn href="/#learn" variant="paper">
-                WATCH THIS WEEK&apos;S VIDEO
-              </Btn>
             </div>
+
+            <a
+              href={LATEST_VIDEO.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group mt-9 block max-w-[380px] no-underline transition-transform duration-75 active:translate-x-[2px] active:translate-y-[2px] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange"
+            >
+              <div className="relative aspect-video border-2 border-ink shadow-[6px_6px_0_#1a1a17] overflow-hidden bg-panel">
+                <Image
+                  src={LATEST_VIDEO.thumb}
+                  alt={LATEST_VIDEO.title}
+                  fill
+                  sizes="380px"
+                  className="object-cover"
+                />
+                <span
+                  aria-hidden
+                  className="absolute inset-0 m-auto w-16 h-16 flex items-center justify-center bg-orange text-white text-2xl border-2 border-ink shadow-[4px_4px_0_#1a1a17] transition-transform group-hover:scale-110"
+                >
+                  ▶
+                </span>
+              </div>
+              <div className="mt-3.5 font-label text-sm font-semibold tracking-[0.05em] text-ink group-hover:text-orange">
+                WATCH THIS WEEK&apos;S VIDEO →
+              </div>
+            </a>
           </div>
 
           <div className="grow-0 shrink basis-[330px] min-w-0 w-full">
@@ -164,13 +195,16 @@ export default async function HomePage({
                   <div className="font-label text-[11px] tracking-[0.12em] text-panel-text-3 mb-2">
                     LATEST VIDEO
                   </div>
-                  <div className="font-label text-sm leading-[1.55] text-paper">
-                    Have AI write your HOA letter
+                  <a
+                    href={LATEST_VIDEO.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-label text-sm leading-[1.55] text-paper no-underline hover:underline"
+                  >
+                    {LATEST_VIDEO.title}
                     <br />
-                    <span className="text-panel-text-3">
-                      — 9:41 · no jargon
-                    </span>
-                  </div>
+                    <span className="text-panel-text-3">— no jargon</span>
+                  </a>
                 </div>
                 <p className="text-[15px] leading-[1.6] text-ink-4">
                   One tool, one task, ten minutes. Plus the Friday email with
@@ -297,8 +331,8 @@ export default async function HomePage({
         <Wrap>
           <div className="border-2 border-ink shadow-[10px_10px_0_#a33e17] bg-panel">
             <PanelBar
-              name="15-HOUR-AUDIT.PDF"
-              right="FREE · PRINTABLE · 2 PAGES"
+              name="15-HOUR-AUDIT"
+              right="FREE · 8 QUESTIONS · 4 MINUTES"
             />
             <div className="p-6 sm:p-10 flex flex-wrap gap-10 items-start">
               <div className="grow min-w-0 basis-[420px]">
@@ -306,19 +340,30 @@ export default async function HomePage({
                   The 15-Hour Audit
                 </h2>
                 <p className="text-lg leading-[1.55] text-panel-text-2 max-w-[30em] mb-6">
-                  A printable checklist that walks your own week, hour by hour,
-                  and marks the work a machine should be doing. Print it, fill
-                  it in at the kitchen table, bring it back.
+                  Eight questions about how your week actually runs. You get
+                  back your own list — the work that repeats, what a machine
+                  should take over, and the one thing to keep doing yourself.
+                  Print it or have it emailed.
                 </p>
-                <SignupForm
-                  id="home-email"
-                  source="homepage"
-                  next="/?subscribed=1#newsletter"
-                  state={state}
-                />
-                <p className="mt-3.5 font-label text-xs text-panel-text-3">
-                  One email a week. Unsubscribe whenever. No sales call.
-                </p>
+                <Btn href="/15-hour-audit" variant="orange">
+                  START THE FREE AUDIT
+                </Btn>
+
+                <div className="mt-8 pt-7 border-t-2 border-panel-line">
+                  <p className="font-label text-[11px] tracking-[0.12em] text-panel-text-3 mb-3.5">
+                    OR JUST THE WEEKLY EMAIL
+                  </p>
+                  <SignupForm
+                    id="home-email"
+                    source="homepage"
+                    next="/?subscribed=1#newsletter"
+                    state={state}
+                    label="SIGN ME UP"
+                  />
+                  <p className="mt-3.5 font-label text-xs text-panel-text-3">
+                    One email a week. Unsubscribe whenever. No sales call.
+                  </p>
+                </div>
               </div>
 
               <div className="grow-0 shrink basis-[240px] min-w-0 w-full border-2 border-panel-line p-5">
@@ -327,10 +372,10 @@ export default async function HomePage({
                 </div>
                 <div className="flex flex-col gap-2.5 font-label text-[13px] leading-[1.5] text-[#d8d1c5]">
                   {[
-                    "The 7 tasks that eat most weeks",
-                    "What to hand over first",
-                    "The exact words to type",
-                    "What to never hand over",
+                    "Every task in your week that repeats",
+                    "The hours each one costs you",
+                    "What to hand over first, and how",
+                    "The one to never hand over",
                   ].map((line) => (
                     <div key={line} className="flex gap-2.5">
                       <span className="mt-1">
