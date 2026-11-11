@@ -24,24 +24,21 @@ import {
 export const metadata: Metadata = {
   title: "MRod — AI for the Rest of Us",
   description:
-    "I find the busywork in your week and hand it to AI. 165 people use my apps, 15 hours a week saved each. Apps, hands-on help and a weekly video — no jargon, no hype.",
+    "I find the busywork in your week and hand it to AI. 15 hours a week saved, $2,300 a year cut from my own business. Apps, hands-on help and a weekly video — no jargon, no hype.",
 };
 
 const PROOF = [
-  { value: "165", label: "PEOPLE USING MY APPS" },
-  { value: "15 ", suffix: "hrs", label: "SAVED PER USER, PER WEEK" },
-  { value: "$3K", label: "MONTHLY RECURRING REVENUE" },
+  { value: "15 ", suffix: "hrs", label: "SAVED PER WEEK" },
+  { value: "$2,300", suffix: "+", label: "A YEAR CUT FROM MY OWN SHOP" },
   { value: "20", suffix: "+ yrs", label: "ENTERPRISE TECH, SHIPPING" },
 ];
 
-// Two columns on a phone, four on a wide screen. The rules between the
-// cells have to move from left to top as the grid rewraps, or stacked
-// stats pick up stray indents.
+// One column on a phone, three on a wider screen. The rules between the
+// cells move from top to left as the grid rewraps.
 const PROOF_CELL = [
-  "lg:pr-6",
-  "border-l-2 border-rule pl-5 lg:px-6",
-  "border-t-2 border-rule pt-6 lg:border-t-0 lg:border-l-2 lg:px-6 lg:pt-6",
-  "border-t-2 border-l-2 border-rule pt-6 pl-5 lg:border-t-0 lg:pl-6 lg:pt-6",
+  "sm:pr-6",
+  "border-t-2 border-rule pt-6 sm:border-t-0 sm:border-l-2 sm:px-6",
+  "border-t-2 border-rule pt-6 sm:border-t-0 sm:border-l-2 sm:px-6",
 ];
 
 const COMPANIES = [
@@ -127,7 +124,7 @@ export default async function HomePage({
       {/* ------------------------------------------------ proof strip */}
       <section className="pb-16">
         <Wrap>
-          <div className="border-y-2 border-ink grid grid-cols-2 lg:grid-cols-4">
+          <div className="border-y-2 border-ink grid grid-cols-1 sm:grid-cols-3">
             {PROOF.map((stat, i) => (
               <div key={stat.label} className={`py-6 ${PROOF_CELL[i]}`}>
                 <Stat
@@ -160,18 +157,23 @@ export default async function HomePage({
                 <h3 className="font-head text-[26px] font-bold tracking-[-0.02em]">
                   Catch up in ten minutes a week
                 </h3>
-                <div className="border-2 border-ink bg-panel px-4 py-3.5">
+                <a
+                  href="https://www.youtube.com/@AIforRestofUswithMike"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block border-2 border-ink bg-panel px-4 py-3.5 no-underline hover:opacity-90"
+                >
                   <div className="font-label text-[11px] tracking-[0.12em] text-panel-text-3 mb-2">
-                    LATEST VIDEO
+                    ON THE CHANNEL
                   </div>
                   <div className="font-label text-sm leading-[1.55] text-paper">
-                    Have AI write your HOA letter
+                    AI bookkeeping: a year of books in under an hour
                     <br />
                     <span className="text-panel-text-3">
-                      — 9:41 · no jargon
+                      — @AIforRestofUswithMike · no jargon
                     </span>
                   </div>
-                </div>
+                </a>
                 <p className="text-[15px] leading-[1.6] text-ink-4">
                   One tool, one task, ten minutes. Plus the Friday email with
                   the one thing worth your attention.
