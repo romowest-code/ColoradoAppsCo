@@ -24,7 +24,7 @@ import {
 export const metadata: Metadata = {
   title: "MRod — AI for the Rest of Us",
   description:
-    "I find the busywork in your week and hand it to AI. 165 people use my apps, 15 hours a week saved each. Apps, audits and a weekly video — no jargon, no hype.",
+    "I find the busywork in your week and hand it to AI. 165 people use my apps, 15 hours a week saved each. Apps, hands-on help and a weekly video — no jargon, no hype.",
 };
 
 const PROOF = [
@@ -94,7 +94,7 @@ export default async function HomePage({
             </p>
 
             <div className="flex flex-wrap gap-3.5 items-center">
-              <Btn href="/#newsletter">▶ START WITH THE FREE AUDIT</Btn>
+              <Btn href="/#newsletter">▶ START WITH THE FREE CHECKLIST</Btn>
               <Btn href="/#learn" variant="paper">
                 WATCH THIS WEEK&apos;S VIDEO
               </Btn>
@@ -103,7 +103,7 @@ export default async function HomePage({
 
           <div className="grow-0 shrink basis-[330px] min-w-0 w-full">
             <div className="border-2 border-ink shadow-[8px_8px_0_#1a1a17] bg-panel">
-              <PanelBar name="MROD.JPG" right="GEN X · DENVER" />
+              <PanelBar name="MROD.JPG" right="DENVER, CO" />
               <div className="relative w-full h-[420px]">
                 <Image
                   src="/mrod-hero.jpg"
@@ -276,7 +276,7 @@ export default async function HomePage({
         <Wrap>
           <div className="border-2 border-ink bg-paper-2 px-8 py-7">
             <div className="font-label text-xs tracking-[0.14em] text-ink-3 mb-5">
-              TWENTY YEARS BEFORE THE CAMERA — 1998 TO TODAY
+              WHERE I'VE WORKED — 1998 TO TODAY
             </div>
             <div className="flex flex-wrap gap-x-10 gap-y-3.5 items-baseline">
               {COMPANIES.map((name) => (
@@ -297,13 +297,13 @@ export default async function HomePage({
         <Wrap>
           <div className="border-2 border-ink shadow-[10px_10px_0_#a33e17] bg-panel">
             <PanelBar
-              name="15-HOUR-AUDIT.PDF"
+              name="15-HOUR-CHECKLIST.PDF"
               right="FREE · PRINTABLE · 2 PAGES"
             />
             <div className="p-6 sm:p-10 flex flex-wrap gap-10 items-start">
               <div className="grow min-w-0 basis-[420px]">
                 <h2 className="font-head text-[clamp(32px,5vw,42px)] leading-[1.04] font-extrabold tracking-[-0.03em] text-panel-text mb-4">
-                  The 15-Hour Audit
+                  The 15-Hour Checklist
                 </h2>
                 <p className="text-lg leading-[1.55] text-panel-text-2 max-w-[30em] mb-6">
                   A printable checklist that walks your own week, hour by hour,
