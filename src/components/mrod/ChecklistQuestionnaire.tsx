@@ -3,8 +3,8 @@
 import { useRef, useState } from "react";
 import Link from "next/link";
 
-import { QUESTIONS, type Question } from "@/lib/audit/questions";
-import type { Audit } from "@/lib/audit/schema";
+import { QUESTIONS, type Question } from "@/lib/checklist/questions";
+import type { Checklist } from "@/lib/checklist/schema";
 
 type Answers = Record<string, string | string[]>;
 type Phase = "asking" | "working" | "done";
@@ -32,11 +32,11 @@ function filled(value: string | string[] | undefined): boolean {
   return !!value && value.trim().length > 0;
 }
 
-export function AuditQuestionnaire() {
+export function ChecklistQuestionnaire() {
   const [answers, setAnswers] = useState<Answers>({});
   const [step, setStep] = useState(0);
   const [phase, setPhase] = useState<Phase>("asking");
-  const [audit, setAudit] = useState<Audit | null>(null);
+  const [checklist, setChecklist] = useState<Checklist | null>(null);
   const [signature, setSignature] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const resultRef = useRef<HTMLDivElement>(null);
@@ -64,7 +64,7 @@ export function AuditQuestionnaire() {
     setPhase("working");
     setError(null);
     try {
-      const response = await fetch("/api/audit-build", {
+      const response = await fetch("/api/checklist-build", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ answers }),
@@ -75,7 +75,7 @@ export function AuditQuestionnaire() {
         setPhase("asking");
         return;
       }
-      setAudit(data.audit);
+      setChecklist(data.checklist);
       setSignature(data.signature ?? null);
       setPhase("done");
       requestAnimationFrame(() =>
@@ -87,10 +87,10 @@ export function AuditQuestionnaire() {
     }
   }
 
-  if (phase === "done" && audit) {
+  if (phase === "done" && checklist) {
     return (
       <div ref={resultRef}>
-        <AuditResult audit={audit} signature={signature} />
+        <ChecklistResult checklist={checklist} signature={signature} />
       </div>
     );
   }
@@ -100,7 +100,7 @@ export function AuditQuestionnaire() {
       <div className="flex items-center gap-2 px-4 py-2.5 border-b-2 border-ink bg-panel-bar">
         <span className="w-2.5 h-2.5 bg-orange-lit" aria-hidden="true" />
         <span className="font-label text-[11px] tracking-[0.12em] text-panel-text-2">
-          15-HOUR-AUDIT
+          15-HOUR-CHECKLIST
         </span>
         <span className="grow" />
         <span className="font-label text-[11px] tracking-[0.12em] text-panel-text-3">
@@ -117,7 +117,7 @@ export function AuditQuestionnaire() {
         aria-valuenow={step + 1}
         aria-valuemin={1}
         aria-valuemax={QUESTIONS.length}
-        aria-label="Progress through the audit"
+        aria-label="Progress through the checklist"
       >
         <div
           className="h-full bg-orange transition-[width] duration-200"
@@ -166,7 +166,7 @@ export function AuditQuestionnaire() {
                 onClick={() => (last ? submit() : setStep(step + 1))}
                 className={`font-label text-sm font-semibold tracking-[0.05em] text-white bg-orange border-2 border-ink shadow-[5px_5px_0_#1a1a17] px-[22px] py-[15px] cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none ${PRESS}`}
               >
-                {last ? "BUILD MY AUDIT" : "NEXT"}
+                {last ? "BUILD MY CHECKLIST" : "NEXT"}
               </button>
 
               {!question.required ? (
@@ -311,9 +311,9 @@ function Working() {
       <div
         className="mt-8 h-1.5 w-full max-w-[320px] mx-auto bg-rule overflow-hidden"
         role="status"
-        aria-label="Building your audit"
+        aria-label="Building your checklist"
       >
-        <div className="h-full w-1/3 bg-orange animate-[audit-sweep_1.4s_ease-in-out_infinite]" />
+        <div className="h-full w-1/3 bg-orange animate-[checklist-sweep_1.4s_ease-in-out_infinite]" />
       </div>
     </div>
   );
@@ -321,14 +321,14 @@ function Working() {
 
 /* --------------------------------------------------------- the result */
 
-export function AuditResult({
-  audit,
+export function ChecklistResult({
+  checklist,
   signature,
 }: {
-  audit: Audit;
+  checklist: Checklist;
   signature: string | null;
 }) {
-  const showHours = audit.hours_high > 0;
+  const showHours = checklist.hours_high > 0;
 
   return (
     <div className="flex flex-col gap-7">
@@ -336,13 +336,13 @@ export function AuditResult({
         <div className="flex items-center gap-2 px-4 py-2.5 border-b-2 border-ink bg-panel-bar print:bg-transparent print:text-ink">
           <span className="w-2.5 h-2.5 bg-orange-lit" aria-hidden="true" />
           <span className="font-label text-[11px] tracking-[0.12em] text-panel-text-2 print:text-ink">
-            YOUR 15-HOUR AUDIT
+            YOUR 15-HOUR CHECKLIST
           </span>
         </div>
 
         <div className="p-6 sm:p-10">
           <h2 className="font-head text-[clamp(26px,4.4vw,38px)] leading-[1.1] font-extrabold tracking-[-0.025em] text-ink max-w-[20em]">
-            {audit.headline}
+            {checklist.headline}
           </h2>
 
           <div className="mt-7 border-2 border-ink bg-paper-3 p-5 sm:p-6 max-w-[34em]">
@@ -352,7 +352,7 @@ export function AuditResult({
                   HOURS IN PLAY
                 </div>
                 <div className="font-head text-[clamp(34px,6vw,52px)] leading-none font-extrabold tracking-[-0.03em] text-orange mt-2">
-                  {hrs(audit.hours_low)}–{hrs(audit.hours_high)}
+                  {hrs(checklist.hours_low)}–{hrs(checklist.hours_high)}
                   <span className="font-body text-[16px] font-normal tracking-normal text-ink-3 ml-2.5">
                     hours a week
                   </span>
@@ -364,7 +364,7 @@ export function AuditResult({
               </div>
             )}
             <p className="mt-3.5 text-[16px] leading-[1.55] text-ink-4">
-              {audit.hours_basis}
+              {checklist.hours_basis}
             </p>
           </div>
         </div>
@@ -376,7 +376,7 @@ export function AuditResult({
           What repeats
         </h3>
 
-        {audit.findings.map((f, i) => (
+        {checklist.findings.map((f, i) => (
           <article
             key={`${f.task}-${i}`}
             className="border-2 border-ink bg-paper-2 break-inside-avoid"
@@ -413,18 +413,18 @@ export function AuditResult({
           KEEP DOING THIS ONE YOURSELF
         </div>
         <h3 className="mt-2.5 font-head text-[clamp(19px,2.8vw,24px)] leading-[1.2] font-extrabold tracking-[-0.02em] text-ink">
-          {audit.keep_by_hand.task}
+          {checklist.keep_by_hand.task}
         </h3>
         <p className="mt-3 text-[17px] leading-[1.55] text-ink-4 max-w-[36em]">
-          {audit.keep_by_hand.why}
+          {checklist.keep_by_hand.why}
         </p>
       </div>
 
       <p className="text-[18px] leading-[1.6] text-ink-2 max-w-[34em]">
-        {audit.closing}
+        {checklist.closing}
       </p>
 
-      <Actions audit={audit} signature={signature} />
+      <Actions checklist={checklist} signature={signature} />
     </div>
   );
 }
@@ -455,10 +455,10 @@ function Row({
 /* ------------------------------------------------------- what next */
 
 function Actions({
-  audit,
+  checklist,
   signature,
 }: {
-  audit: Audit;
+  checklist: Checklist;
   signature: string | null;
 }) {
   const [email, setEmail] = useState("");
@@ -472,10 +472,10 @@ function Actions({
     setState("sending");
     setMessage(null);
     try {
-      const response = await fetch("/api/audit-send", {
+      const response = await fetch("/api/checklist-send", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, audit, signature }),
+        body: JSON.stringify({ email, checklist, signature }),
       });
       const data = await response.json();
       if (!response.ok) {
@@ -514,7 +514,7 @@ function Actions({
               onClick={() => window.print()}
               className={`mt-4 font-label text-sm font-semibold tracking-[0.05em] text-ink bg-paper-2 border-2 border-panel-text px-[22px] py-3.5 cursor-pointer ${PRESS}`}
             >
-              PRINT THIS AUDIT
+              PRINT THIS CHECKLIST
             </button>
           </div>
 
@@ -539,13 +539,13 @@ function Actions({
               ) : (
                 <form onSubmit={send} className="mt-4 flex flex-col gap-3">
                   <label
-                    htmlFor="audit-email"
+                    htmlFor="checklist-email"
                     className="font-label text-[11px] tracking-[0.12em] text-[#b5ada1]"
                   >
                     YOUR EMAIL
                   </label>
                   <input
-                    id="audit-email"
+                    id="checklist-email"
                     name="email"
                     type="email"
                     required

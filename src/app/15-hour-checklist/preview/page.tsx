@@ -1,17 +1,17 @@
 import { notFound } from "next/navigation";
 import { Shell, Wrap } from "@/components/mrod/SiteChrome";
-import { AuditResult } from "@/components/mrod/AuditQuestionnaire";
-import type { Audit } from "@/lib/audit/schema";
+import { ChecklistResult } from "@/components/mrod/ChecklistQuestionnaire";
+import type { Checklist } from "@/lib/checklist/schema";
 
 /**
  * Development only — 404s in production.
  *
- * Renders a finished audit from canned data so the result layout and the
+ * Renders a finished checklist from canned data so the result layout and the
  * print stylesheet can be worked on without spending an API call each
  * time. The sample is deliberately a believable answer set, not a tidy
  * one: a real person's numbers are uneven.
  */
-const SAMPLE: Audit = {
+const SAMPLE: Checklist = {
   headline:
     "Writing the same job details down three times is costing you most of a working day every week.",
   hours_low: 5.5,
@@ -61,7 +61,7 @@ const SAMPLE: Audit = {
     "None of this needs new software this week. The first step on each one is something you can do between jobs. Start with the quotes — it is the biggest number on the list and the easiest to change. If that gets you the Friday morning back, you will know whether the rest is worth doing.",
 };
 
-export default function AuditPreviewPage() {
+export default function ChecklistPreviewPage() {
   if (process.env.NODE_ENV === "production") notFound();
 
   return (
@@ -71,7 +71,7 @@ export default function AuditPreviewPage() {
           <p className="print:hidden mb-8 font-label text-[11px] tracking-[0.12em] text-orange border-2 border-orange bg-paper-2 inline-block px-3 py-2">
             DEV PREVIEW · CANNED DATA · 404s IN PRODUCTION
           </p>
-          <AuditResult audit={SAMPLE} signature="preview" />
+          <ChecklistResult checklist={SAMPLE} signature="preview" />
         </Wrap>
       </section>
     </Shell>

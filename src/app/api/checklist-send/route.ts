@@ -1,11 +1,11 @@
 import { Resend } from "resend";
 import { NextResponse } from "next/server";
 
-import { AuditSchema, type Audit } from "@/lib/audit/schema";
-import { verify } from "@/lib/audit/sign";
-import { allow, clientKey } from "@/lib/audit/limit";
+import { ChecklistSchema, type Checklist } from "@/lib/checklist/schema";
+import { verify } from "@/lib/checklist/sign";
+import { allow, clientKey } from "@/lib/checklist/limit";
 
-const INBOX = process.env.AUDIT_INBOX || "support@coloradoappsco.com";
+const INBOX = process.env.CHECKLIST_INBOX || "support@coloradoappsco.com";
 const FROM = "MRod — coloradoappsai.com <noreply@coloradoappsco.com>";
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -13,7 +13,7 @@ function client() {
   return new Resend(process.env.RESEND_API_KEY);
 }
 
-const DIFFICULTY: Record<Audit["findings"][number]["difficulty"], string> = {
+const DIFFICULTY: Record<Checklist["findings"][number]["difficulty"], string> = {
   easy: "Easy",
   medium: "Takes a weekend",
   involved: "Worth getting help with",
@@ -24,26 +24,26 @@ function hours(n: number): string {
   return `${Math.round(n * 10) / 10} hrs/week`;
 }
 
-function asText(audit: Audit): string {
+function asText(checklist: Checklist): string {
   const lines: string[] = [
-    "YOUR 15-HOUR AUDIT",
+    "YOUR 15-HOUR CHECKLIST",
     "",
-    audit.headline,
+    checklist.headline,
     "",
   ];
 
-  if (audit.hours_high > 0) {
+  if (checklist.hours_high > 0) {
     lines.push(
-      `Hours in play: ${audit.hours_low}–${audit.hours_high} a week`,
-      audit.hours_basis,
+      `Hours in play: ${checklist.hours_low}–${checklist.hours_high} a week`,
+      checklist.hours_basis,
       "",
     );
   } else {
-    lines.push(audit.hours_basis, "");
+    lines.push(checklist.hours_basis, "");
   }
 
   lines.push("WHAT REPEATS", "");
-  audit.findings.forEach((f, i) => {
+  checklist.findings.forEach((f, i) => {
     lines.push(
       `${i + 1}. ${f.task}  (${hours(f.hours_per_week)} · ${DIFFICULTY[f.difficulty]})`,
       "",
@@ -57,12 +57,12 @@ function asText(audit: Audit): string {
   lines.push(
     "KEEP DOING THIS ONE YOURSELF",
     "",
-    audit.keep_by_hand.task,
-    audit.keep_by_hand.why,
+    checklist.keep_by_hand.task,
+    checklist.keep_by_hand.why,
     "",
     "---",
     "",
-    audit.closing,
+    checklist.closing,
     "",
     "---",
     "",
@@ -87,7 +87,7 @@ export async function POST(request: Request) {
     );
   }
 
-  let body: { email?: unknown; audit?: unknown; signature?: unknown };
+  let body: { email?: unknown; checklist?: unknown; signature?: unknown };
   try {
     body = await request.json();
   } catch {
@@ -102,31 +102,31 @@ export async function POST(request: Request) {
     );
   }
 
-  // The audit must be one we generated and signed — otherwise this endpoint
+  // The checklist must be one we generated and signed — otherwise this endpoint
   // would happily mail anything to anyone.
-  if (!verify(body.audit, body.signature)) {
+  if (!verify(body.checklist, body.signature)) {
     return NextResponse.json(
-      { error: "That audit couldn't be verified. Run it again." },
+      { error: "That checklist couldn't be verified. Run it again." },
       { status: 400 },
     );
   }
 
-  const parsed = AuditSchema.safeParse(body.audit);
+  const parsed = ChecklistSchema.safeParse(body.checklist);
   if (!parsed.success) {
     return NextResponse.json(
-      { error: "That audit couldn't be read. Run it again." },
+      { error: "That checklist couldn't be read. Run it again." },
       { status: 400 },
     );
   }
-  const audit = parsed.data;
+  const checklist = parsed.data;
 
   try {
     await client().emails.send({
       from: FROM,
       to: [email],
       replyTo: INBOX,
-      subject: "Your 15-Hour Audit",
-      text: asText(audit),
+      subject: "Your 15-Hour Checklist",
+      text: asText(checklist),
     });
 
     // The list join. Same shape as /api/subscribe so both land together.
@@ -134,22 +134,22 @@ export async function POST(request: Request) {
       from: FROM,
       to: [INBOX],
       replyTo: email,
-      subject: `15-Hour Audit completed — ${email}`,
+      subject: `15-Hour Checklist completed — ${email}`,
       text: [
-        "Someone finished the interactive 15-Hour Audit and had it emailed.",
+        "Someone finished the interactive 15-Hour Checklist and had it emailed.",
         "",
         `Email: ${email}`,
         `Time:  ${new Date().toISOString()}`,
         "",
-        "Their audit:",
+        "Their checklist:",
         "",
-        asText(audit),
+        asText(checklist),
       ].join("\n"),
     });
 
     return NextResponse.json({ ok: true });
   } catch (error) {
-    console.error("audit-send failed", error);
+    console.error("checklist-send failed", error);
     return NextResponse.json(
       { error: "Couldn't send it. Try again in a minute." },
       { status: 500 },

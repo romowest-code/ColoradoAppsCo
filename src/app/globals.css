@@ -85,10 +85,10 @@ body {
 
 /* ---------------------------------------------- the 15-Hour Audit
    The sweep on the "working" bar, and the print rules that turn a
-   finished audit into something worth putting on the kitchen table.
+   finished checklist into something worth putting on the kitchen table.
    -------------------------------------------------------------- */
 
-@keyframes audit-sweep {
+@keyframes checklist-sweep {
   0% {
     transform: translateX(-100%);
   }
@@ -98,7 +98,7 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .animate-\[audit-sweep_1\.4s_ease-in-out_infinite\] {
+  .animate-\[checklist-sweep_1\.4s_ease-in-out_infinite\] {
     animation: none;
     width: 100%;
     opacity: 0.4;

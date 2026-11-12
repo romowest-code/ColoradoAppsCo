@@ -5,16 +5,16 @@ import {
   SiteHeader,
   Wrap,
 } from "@/components/mrod/SiteChrome";
-import { AuditQuestionnaire } from "@/components/mrod/AuditQuestionnaire";
+import { ChecklistQuestionnaire } from "@/components/mrod/ChecklistQuestionnaire";
 import { Eyebrow } from "@/components/mrod/ui";
 
 export const metadata: Metadata = {
-  title: "The 15-Hour Audit — MRod",
+  title: "The 15-Hour Checklist — MRod",
   description:
     "Eight questions about your week. You get back a list of the work that repeats, what a machine should take over, and what to keep doing yourself. Free, nothing to install.",
 };
 
-export default function FifteenHourAuditPage() {
+export default function FifteenHourChecklistPage() {
   return (
     <Shell>
       <div className="print:hidden">
@@ -28,7 +28,7 @@ export default function FifteenHourAuditPage() {
         <Wrap>
           <Eyebrow>FREE · NOTHING TO INSTALL · ABOUT FOUR MINUTES</Eyebrow>
           <h1 className="mt-5 font-head text-[clamp(34px,6.5vw,56px)] leading-[1.02] font-extrabold tracking-[-0.035em] text-ink max-w-[14em]">
-            The 15-Hour Audit
+            The 15-Hour Checklist
           </h1>
           <p className="mt-5 text-[19px] leading-[1.55] text-ink-3 max-w-[34em]">
             Eight questions about how your week actually runs. At the end you
@@ -44,7 +44,7 @@ export default function FifteenHourAuditPage() {
 
       <section className="pb-20">
         <Wrap>
-          <AuditQuestionnaire />
+          <ChecklistQuestionnaire />
         </Wrap>
       </section>
 

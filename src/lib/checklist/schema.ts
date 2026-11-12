@@ -35,7 +35,7 @@ export const FindingSchema = z.object({
     .describe("How hard the handover is for a non-technical person."),
 });
 
-export const AuditSchema = z.object({
+export const ChecklistSchema = z.object({
   headline: z
     .string()
     .describe(
@@ -73,4 +73,22 @@ export const AuditSchema = z.object({
 });
 
 export type Finding = z.infer<typeof FindingSchema>;
-export type Audit = z.infer<typeof AuditSchema>;
+export type Checklist = z.infer<typeof ChecklistSchema>;
+
+/**
+ * The schema in the shape OpenAI's strict structured outputs want.
+ *
+ * zod 4's toJSONSchema with io:"output" already emits
+ * `additionalProperties: false` and lists every property in `required`,
+ * which is exactly what strict mode demands — so there is nothing to
+ * patch up by hand. `$schema` comes off because the API rejects unknown
+ * top-level keywords.
+ */
+export function checklistJsonSchema(): Record<string, unknown> {
+  const schema = z.toJSONSchema(ChecklistSchema, {
+    target: "draft-2020-12",
+    io: "output",
+  }) as Record<string, unknown>;
+  delete schema.$schema;
+  return schema;
+}

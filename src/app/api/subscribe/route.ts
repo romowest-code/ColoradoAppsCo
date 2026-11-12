@@ -41,9 +41,9 @@ export async function POST(request: Request) {
       from: "MRod <noreply@coloradoappsco.com>",
       to: ["support@coloradoappsco.com"],
       replyTo: email,
-      subject: `15-Hour Audit request — ${email}`,
+      subject: `15-Hour Checklist request — ${email}`,
       text: [
-        "Someone asked for the 15-Hour Audit checklist.",
+        "Someone asked for the 15-Hour Checklist.",
         "",
         `Email:  ${email}`,
         `Source: ${source}`,

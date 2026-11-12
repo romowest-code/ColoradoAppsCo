@@ -1,5 +1,5 @@
 /**
- * The 15-Hour Audit question set.
+ * The 15-Hour Checklist question set.
  *
  * Fixed, not adaptive: eight questions, asked one at a time. The same
  * array drives the form on the client and validates the payload on the

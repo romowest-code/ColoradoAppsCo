@@ -31,7 +31,7 @@ export function Wrap({
 
 export function SiteHeader({
   active = null,
-  cta = { href: "/15-hour-audit", label: "GET THE 15-HOUR AUDIT" },
+  cta = { href: "/15-hour-checklist", label: "GET THE 15-HOUR CHECKLIST" },
 }: {
   active?: Section;
   cta?: { href: string; label: string };
@@ -65,10 +65,10 @@ export function SiteHeader({
             </Link>
           )}
           {active === "audit" ? (
-            <span className={`${NAV_ACTIVE} border-idea`}>AUDITS</span>
+            <span className={`${NAV_ACTIVE} border-idea`}>HIRE</span>
           ) : (
             <Link href="/audit" className={NAV_LINK}>
-              AUDITS
+              HIRE
             </Link>
           )}
           <Link href="/#newsletter" className={`${NAV_LINK} hidden sm:block`}>
@@ -101,7 +101,7 @@ export function SiteFooter({ home = false }: { home?: boolean }) {
               href="/audit"
               className="font-label text-xs tracking-[0.08em] text-ink-2 no-underline py-2.5"
             >
-              AUDITS
+              HIRE
             </Link>
             <Link
               href="/#newsletter"

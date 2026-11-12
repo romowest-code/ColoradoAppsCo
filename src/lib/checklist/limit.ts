@@ -1,7 +1,7 @@
 /**
  * A speed bump, not a lock.
  *
- * The audit endpoint costs real money per call and sits on the public
+ * The checklist endpoint costs real money per call and sits on the public
  * internet with no login in front of it. This keeps one person — or one
  * bored script — from running up a bill.
  *

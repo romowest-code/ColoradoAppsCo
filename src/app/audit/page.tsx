@@ -42,18 +42,16 @@ const HOURS = [
 
 const CASES = [
   {
-    tag: "EXAMPLE 01 · FIELD SERVICE",
-    title: "[COMPANY TYPE], [N] trucks",
+    tag: "MY OWN SHOP · FIELD SERVICE",
+    title: "Trailside Handyman, one operator",
     before:
-      "[The owner's evening routine — quotes typed twice, scheduling by text, invoices on Sunday night.]",
-    after: "[What runs by itself now, and who touches it.]",
-  },
-  {
-    tag: "EXAMPLE 02 · SHORT-TERM RENTALS",
-    title: "[N] properties, one operator",
-    before:
-      "[Guest messages answered by hand at 11pm, cleaner scheduling in a group chat, owner statements rebuilt every month.]",
-    after: "[What the system handles now, and what still gets a human.]",
+      "Housecall Pro at $180 a month for quotes and invoices, a $39-a-month voicemail service, and a paid mileage app. Three bills for work I did by hand anyway.",
+    after:
+      "Quotes, invoices and scheduling run in an app I built with AI for about $20 a month in hosting. Calls, voicemail transcripts and texts run on Twilio for $2 a month. Mileage logs itself.",
+    stats: [
+      { value: "$2,300+", label: "A YEAR, CUT" },
+      { value: "$2", label: "A MONTH FOR THE PHONE" },
+    ],
   },
 ];
 
@@ -172,10 +170,10 @@ export default async function AuditPage({
       <section className="pb-14">
         <Wrap>
           <h2 className="font-head text-[32px] font-extrabold tracking-[-0.03em] mb-2">
-            Two businesses with nothing in common
+            I ran it on my own business first
           </h2>
           <p className="text-[17px] text-ink-3 mb-6.5">
-            Different trades, different tools, same three hours.
+            Before I sell it to you, here&apos;s what it did for mine. Client stories go here as they come in.
           </p>
           <div className="flex flex-wrap gap-6">
             {CASES.map((c) => (
@@ -212,8 +210,9 @@ export default async function AuditPage({
                     </div>
                   </div>
                   <div className="flex gap-6.5 border-t-2 border-rule pt-4.5">
-                    <Stat size="md" value="[N] hrs" label="BACK PER WEEK" />
-                    <Stat size="md" value="[$N]" label="A MONTH" />
+                    {c.stats.map((st) => (
+                      <Stat key={st.label} size="md" value={st.value} label={st.label} />
+                    ))}
                   </div>
                 </div>
               </article>
@@ -226,7 +225,7 @@ export default async function AuditPage({
       <section id="book" className="pb-16 scroll-mt-8">
         <Wrap>
           <div className="border-2 border-ink shadow-[10px_10px_0_#a33e17] bg-panel">
-            <PanelBar name="BOOK-THE-AUDIT" right="4 SEATS A MONTH" />
+            <PanelBar name="BOOK-THE-AFTERNOON" right="4 SEATS A MONTH" />
             <div className="p-6 sm:p-10 flex flex-wrap gap-10 items-start">
               <div className="grow min-w-0 basis-[440px]">
                 <h2 className="font-head text-[clamp(30px,5vw,38px)] leading-[1.04] font-extrabold tracking-[-0.03em] text-panel-text mb-3.5">
@@ -245,12 +244,12 @@ export default async function AuditPage({
                   NOT READY YET?
                 </div>
                 <p className="text-[15px] leading-[1.6] text-[#d8d1c5] mb-4.5">
-                  Do the 15-Hour Audit yourself first. Eight questions about
-                  your week, and you get your own list back. Free, and no
-                  email needed to read it.
+                  Do the 15-Hour Checklist yourself first. Eight
+                  questions about your week, and you get your own list
+                  back. Free, and no email needed to read it.
                 </p>
-                <Btn href="/15-hour-audit" variant="paper" block>
-                  START THE FREE AUDIT
+                <Btn href="/15-hour-checklist" variant="paper" block>
+                  START THE FREE CHECKLIST
                 </Btn>
               </div>
             </div>
