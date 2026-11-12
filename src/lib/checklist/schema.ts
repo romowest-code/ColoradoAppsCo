@@ -54,7 +54,7 @@ export const ChecklistSchema = z.object({
     ),
   findings: z
     .array(FindingSchema)
-    .describe("Three to five findings, most costly first."),
+    .describe("Two to five findings, most costly first. Never pad the list to reach a number — only tasks they actually described."),
   keep_by_hand: z
     .object({
       task: z.string().describe("Something from their week that should stay human."),

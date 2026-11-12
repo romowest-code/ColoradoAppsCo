@@ -71,7 +71,7 @@ function asText(checklist: Checklist): string {
     "",
     "If you'd rather someone did this with you: three hours, $750 flat,",
     "and if you don't leave with time back every week you don't pay.",
-    "coloradoappsai.com/audit",
+    "ai-rest-of-us.app/audit",
     "",
     "— Mike",
   );
