@@ -44,3 +44,9 @@ next-env.d.ts
 # macOS resource forks (this repo lives on an exFAT volume)
 ._*
 .DS_Store
+
+# brand: keep scripts, thumbnails, motion source; video renders live on the drive
+brand/**/*.mp4
+brand/**/*.mov
+brand/motion-source/node_modules
+brand/motion-source/out
