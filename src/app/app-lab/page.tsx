@@ -24,7 +24,6 @@ const FILTERS = [
   { label: "ALL", dot: null },
   { label: "LIVE", dot: "bg-live" },
   { label: "BETA", dot: "bg-orange" },
-  { label: "IDEA", dot: "bg-idea" },
 ] as const;
 
 export default function AppLabPage() {
@@ -55,8 +54,6 @@ export default function AppLabPage() {
             </div>
             <div className="flex flex-col gap-2.5 font-label text-[13px] text-ink-2">
               {[
-                { n: "165", rest: "people using something I made" },
-                { n: "$3K", rest: "monthly recurring" },
                 { n: "15", rest: "hrs saved, per user, per week" },
               ].map((row) => (
                 <div key={row.n} className="flex items-baseline gap-2.5">
@@ -125,14 +122,12 @@ export default function AppLabPage() {
                   job it was for, and the numbers land where they belong.
                 </p>
                 <div className="flex flex-wrap gap-6 border-t-2 border-rule pt-4.5">
-                  <Stat size="md" value="165" label="USERS" />
                   <Stat
                     size="md"
                     value="15 "
                     suffix="hrs"
                     label="SAVED / WEEK / USER"
                   />
-                  <Stat size="md" value="$3K" label="MRR" />
                   <Stat size="md" value="$19.99" label="A MONTH TO USE IT" />
                 </div>
                 <div className="border-2 border-ink bg-paper px-4.5 py-4 mt-5">
@@ -232,45 +227,6 @@ export default function AppLabPage() {
               </div>
             </div>
           </article>
-
-          {/* Ideas */}
-          <div className="flex flex-wrap gap-6">
-            {[
-              {
-                title: "[NEXT EXPERIMENT]",
-                body: "One line on the problem. One line on who has it. If enough of you want it, it gets built on camera.",
-                cta: "VOTE FOR THIS ONE →",
-              },
-              {
-                title: "[YOUR IDEA HERE]",
-                body: "Tell me the thing that eats your Tuesday. The best one each month becomes a build video.",
-                cta: "SEND ME ONE →",
-              },
-            ].map((idea) => (
-              <article
-                key={idea.title}
-                className="grow basis-[320px] min-w-0 border-2 border-dashed border-rule-dashed bg-paper-3"
-              >
-                <div className="px-5 py-3 border-b-2 border-dashed border-rule-dashed flex gap-3 items-center">
-                  <Chip status="IDEA" />
-                  <span className="font-label text-xs tracking-[0.1em] text-ink-3">
-                    VOTING OPEN
-                  </span>
-                </div>
-                <div className="p-5.5">
-                  <h3 className="font-head text-2xl font-bold tracking-[-0.02em] mb-2.5">
-                    {idea.title}
-                  </h3>
-                  <p className="text-[15px] leading-[1.6] text-ink-4 mb-4.5">
-                    {idea.body}
-                  </p>
-                  <TextLink href="/#newsletter" tone="idea">
-                    {idea.cta}
-                  </TextLink>
-                </div>
-              </article>
-            ))}
-          </div>
         </Wrap>
       </section>
 

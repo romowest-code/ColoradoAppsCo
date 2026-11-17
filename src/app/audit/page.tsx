@@ -9,9 +9,9 @@ import { AuditForm, readAuditState } from "@/components/mrod/AuditForm";
 import { Btn, Eyebrow, PanelBar, Square, Stat } from "@/components/mrod/ui";
 
 export const metadata: Metadata = {
-  title: "Three hours, or it's free — MRod",
+  title: "Time and money saved, or it's free — MRod",
   description:
-    "Give me one afternoon. I find the work that repeats in your week and build the fix while you watch. Any business, any industry. If you don't leave with time back every week, you don't pay.",
+    "One afternoon, $750 flat. I find the work that repeats in your week and build the fix while you watch. If it doesn't save you time and money every week, you don't pay.",
 };
 
 const INCLUDED = [
@@ -78,23 +78,24 @@ export default async function AuditPage({
               <Eyebrow tone="idea">03 / HIRE</Eyebrow>
             </div>
             <h1 className="font-head text-[clamp(40px,7vw,60px)] leading-[0.98] font-extrabold tracking-[-0.035em] mb-5">
-              Three hours.
+              Time &amp; money saved.
               <br />
               <span className="inline-block bg-orange text-white px-3.5 pt-0.5 pb-1.5 mt-2">
                 Or it&apos;s free.
               </span>
             </h1>
             <p className="text-xl leading-[1.5] text-ink-5 max-w-[32em] mb-5.5">
-              Give me one afternoon. I sit with your actual week — the quotes,
-              the scheduling, the invoices, the three spreadsheets nobody will
-              admit to — find the work that repeats, and build the fix while
-              you watch. You leave with something running, not a report.
+              Give me one three-hour afternoon. We go through your actual week
+              — the quotes, the scheduling, the invoices, the three
+              spreadsheets nobody will admit to. I find the work you repeat,
+              put a dollar figure on it, and build the fix while you watch.
+              You leave with something running, not a report.
             </p>
             <p className="text-lg leading-[1.55] text-ink-5 max-w-[32em] mb-5.5">
-              Any business, any industry. I don&apos;t need to know your trade
-              — you do, and that&apos;s the half that matters. If you
-              don&apos;t walk away with time back every week, you don&apos;t
-              pay.
+              The promise is simple: if what we build doesn&apos;t save you
+              time and money every week, you don&apos;t pay. Any business, any
+              industry. I don&apos;t need to know your trade — you do, and
+              that&apos;s the half that matters.
             </p>
             <p className="text-base leading-[1.65] text-ink-3 max-w-[34em] border-l-[3px] border-idea pl-4">
               Twenty years of this at Oracle, Barclays and Amgen, where the

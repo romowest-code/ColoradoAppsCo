@@ -147,9 +147,7 @@ export default async function HomePage({
               </div>
             </div>
             <p className="mt-4.5 font-label text-xs leading-[1.8] tracking-[0.04em] text-ink-3">
-              Colorado Apps Co. builds the apps.
-              <br />
-              I&apos;m the one on camera.
+              Michael Rodriguez
             </p>
           </div>
         </Wrap>
@@ -269,10 +267,10 @@ export default async function HomePage({
               <DoorTag n="03" name="HIRE" tone="idea" />
               <div className="p-6 flex flex-col gap-4 grow">
                 <h3 className="font-head text-[26px] font-bold tracking-[-0.02em]">
-                  Three hours, or it&apos;s free
+                  Time &amp; money saved, or it&apos;s free
                 </h3>
                 <div className="font-label text-[12px] tracking-[0.1em] text-ink-3 -mt-2">
-                  $750 FLAT · 4 SEATS A MONTH
+                  ONE AFTERNOON · $750 FLAT · 4 SEATS A MONTH
                 </div>
                 <p className="text-[15px] leading-[1.6] text-ink-4">
                   Give me one afternoon. I sit with your actual week, find the
