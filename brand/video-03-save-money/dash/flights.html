@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Denver to New York Fare Watch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="kit.css">
+<style>
+  .main { display: grid; grid-template-columns: 1.45fr 1fr; gap: 22px; min-height: 0; }
+  .map { position: relative; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+  .map svg { width: 100%; height: auto; display: block; }
+  .map .hd { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .stats div { border-top: 2px solid rgba(237,227,209,.25); padding-top: 8px; }
+  .stats b { display: block; font-size: 26px; font-weight: 800; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+  .side { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+  .fares { display: flex; flex-direction: column; }
+  .fare { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+  .fare:last-child { border-bottom: 0; }
+  .fare .who { font-weight: 800; font-size: 20px; }
+  .fare .pp { font-weight: 800; font-size: 24px; text-align: right; font-variant-numeric: tabular-nums; }
+  .fare .sub { grid-column: 1 / -1; display: flex; justify-content: space-between; gap: 10px; }
+  .fare.best .who::before { content: ""; display: inline-block; width: 10px; height: 10px; background: var(--rust); margin-right: 8px; }
+  .gap { display: flex; flex-direction: column; gap: 10px; }
+  .track { position: relative; height: 34px; background: rgba(30,28,24,.08); border: 2px solid var(--ink); }
+  .fill { position: absolute; inset: 0 auto 0 0; background: var(--rust); }
+  .budget { position: absolute; top: -8px; bottom: -8px; width: 3px; background: var(--teal); }
+  .budget span { position: absolute; top: 44px; left: -40px; width: 120px; font: 600 11px var(--mono); letter-spacing: .1em; color: var(--teal); }
+  .watch { display: flex; align-items: center; gap: 10px; }
+  .pulse { width: 12px; height: 12px; background: var(--teal); }
+  @media (max-width: 900px) { .main { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="board">
+  <div class="bar">
+    <span class="dots"><i></i><i></i><i></i></span>
+    <h1>Denver → New York · Dec 20–27 · 4 travelers</h1>
+    <span class="tag">Hack 03 · Google AI Mode</span>
+    <button class="replay" type="button">Fly it again</button>
+  </div>
+
+  <div class="main">
+    <div class="panel dark map">
+      <div class="hd">
+        <span class="label">Cheapest nonstop · round trip</span>
+        <span class="label" id="clock">DEN 11:30 PM → JFK 5:07 AM</span>
+      </div>
+      <svg id="map" viewBox="0 0 975 610" role="img" aria-label="Map of the US with the flight path from Denver to New York JFK"></svg>
+      <div class="stats">
+        <div><span class="label">Distance</span><b id="dist">0 mi</b></div>
+        <div><span class="label">In the air</span><b id="air">0h 00m</b></div>
+        <div><span class="label">Clocks jump</span><b>+2 hours</b></div>
+      </div>
+    </div>
+
+    <div class="side">
+      <div class="panel">
+        <span class="label muted">Cheapest per person</span>
+        <div class="hero-num rust" id="hero">$0</div>
+        <div class="mono" style="margin-top:8px">JetBlue nonstop · $1,968 for all four</div>
+      </div>
+
+      <div class="panel fares" id="fares">
+        <div class="fare best"><span class="who">JetBlue</span><span class="pp">$492</span>
+          <span class="sub mono muted"><span>DEN → JFK · 3h 37m</span><span>$1,968 total</span></span></div>
+        <div class="fare"><span class="who">Southwest</span><span class="pp">$627</span>
+          <span class="sub mono muted"><span>DEN → LGA · 3h 35m</span><span>$2,508 total</span></span></div>
+        <div class="fare"><span class="who">Delta</span><span class="pp">$627</span>
+          <span class="sub mono muted"><span>DEN → LGA · 3h 37m</span><span>$2,508 total</span></span></div>
+      </div>
+
+      <div class="panel gap">
+        <span class="label">Your budget vs. today's best fare</span>
+        <div class="track"><div class="fill" id="fill"></div><div class="budget" id="budget"><span>$400 budget</span></div></div>
+        <div class="watch" style="margin-top:14px"><span class="pulse" id="pulse"></span><span class="mono" id="watch">$92 a person over budget · price tracking does the waiting</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <span class="mono">Fares from Google AI Mode, Nov 13, 2026 · not booked · prices change</span>
+    <span class="mono">AI for the Rest of Us</span>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+<script src="us-states.js"></script>
+<script src="kit.js"></script>
+<script>
+  const svg = d3.select("#map");
+  const proj = d3.geoAlbersUsa().scale(1300).translate([487.5, 305]);
+  const states = topojson.feature(US_STATES, US_STATES.objects.states).features;
+  const path = d3.geoPath();
+  const gStates = svg.append("g");
+  gStates.selectAll("path").data(states).join("path")
+    .attr("d", path).attr("fill", (d) => (d.id === "08" || d.id === "36" ? "#3A332B" : "#2A2621"))
+    .attr("stroke", "#EDE3D1").attr("stroke-opacity", 0.16).attr("stroke-width", 0.8);
+
+  const DEN = [-104.673, 39.856], JFK = [-73.779, 40.641];
+  const a = proj(DEN), b = proj(JFK);
+  const miles = Math.round(d3.geoDistance(DEN, JFK) * 3958.8);
+  const mid = [(a[0] + b[0]) / 2, Math.min(a[1], b[1]) - 150];
+  const arcD = `M${a[0]},${a[1]} Q${mid[0]},${mid[1]} ${b[0]},${b[1]}`;
+  svg.append("path").attr("d", arcD).attr("fill", "none").attr("stroke", "#EDE3D1").attr("stroke-opacity", .22).attr("stroke-width", 2).attr("stroke-dasharray", "3 7");
+  const trail = svg.append("path").attr("d", arcD).attr("fill", "none").attr("stroke", "#A33E17").attr("stroke-width", 4).attr("stroke-linecap", "round");
+  const L = trail.node().getTotalLength();
+  trail.attr("stroke-dasharray", L).attr("stroke-dashoffset", L);
+
+  const pin = (p, code, city, dx) => {
+    const g = svg.append("g").attr("transform", `translate(${p[0]},${p[1]})`).append("g");
+    g.append("rect").attr("x", -8).attr("y", -8).attr("width", 16).attr("height", 16).attr("fill", "#A33E17").attr("stroke", "#EDE3D1").attr("stroke-width", 2);
+    const t = g.append("g").attr("transform", `translate(${dx},-24)`);
+    t.append("text").text(code).attr("fill", "#EDE3D1").attr("font-family", "Archivo").attr("font-weight", 800).attr("font-size", 34).attr("text-anchor", "middle");
+    t.append("text").text(city).attr("y", 22).attr("fill", "#EDE3D1").attr("fill-opacity", .7).attr("font-family", "IBM Plex Mono").attr("font-weight", 600).attr("font-size", 13).attr("letter-spacing", "1.5").attr("text-anchor", "middle");
+    return g.node();
+  };
+  const pA = pin(a, "DEN", "DENVER", 0), pB = pin(b, "JFK", "NEW YORK", -10);
+
+  // plane: simple top-down silhouette pointing right (+x)
+  const plane = svg.append("g");
+  plane.append("path").attr("d", "M22,0 L6,-3 L-4,-20 L-10,-20 L-4,-3 L-16,-3 L-21,-10 L-25,-10 L-22,0 L-25,10 L-21,10 L-16,3 L-4,3 L-10,20 L-4,20 L6,3 Z")
+    .attr("fill", "#EDE3D1").attr("stroke", "#1E1C18").attr("stroke-width", 1.5);
+
+  const $ = (id) => document.getElementById(id);
+  const rows = [...document.querySelectorAll(".fare")];
+  K.length(8.5);
+  K.tick((t) => {
+    gStates.attr("opacity", K.out(K.p(t, 0, 0.8)));
+    K.pop(pA, t, 0.5); K.pop(pB, t, 0.8);
+    const k = K.inOut(K.p(t, 1.1, 3.6));
+    trail.attr("stroke-dashoffset", L * (1 - k));
+    const pt = trail.node().getPointAtLength(L * k);
+    const ahead = trail.node().getPointAtLength(Math.min(L, L * k + 2));
+    const ang = Math.atan2(ahead.y - pt.y, ahead.x - pt.x) * 180 / Math.PI;
+    const s = 1 + Math.sin(k * Math.PI) * 0.6; // climbs, then descends
+    plane.attr("transform", `translate(${pt.x},${pt.y}) rotate(${k >= 1 ? 0 : ang}) scale(${s})`).attr("opacity", t < 1.1 ? 0 : 1);
+    $("dist").textContent = Math.round(miles * k).toLocaleString() + " mi";
+    const mins = Math.round(217 * k);
+    $("air").textContent = `${Math.floor(mins / 60)}h ${String(mins % 60).padStart(2, "0")}m`;
+    rows.forEach((r, i) => K.rise(r, t, 2.0 + i * 0.35));
+    K.count($("hero"), t, 3.4, 1.4, 0, 492, (v) => K.money(Math.round(v)));
+    // budget bar: scale $0–$650 per person
+    const scale = (v) => (v / 650) * 100;
+    $("fill").style.width = scale(K.lerp(0, 492, K.out(K.p(t, 4.6, 1.0)))) + "%";
+    $("budget").style.left = scale(400) + "%";
+    $("budget").style.opacity = K.p(t, 4.4, 0.3);
+    K.rise($("watch"), t, 5.6);
+    $("pulse").style.opacity = t < 5.6 ? 0 : 0.45 + 0.55 * Math.abs(Math.sin(t * 2.4));
+  });
+</script>
+</body>
+</html>

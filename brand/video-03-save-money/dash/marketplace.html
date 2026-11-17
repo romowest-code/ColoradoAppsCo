@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Peloton Haggle</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="kit.css">
+<style>
+  .main { display: grid; grid-template-columns: 1fr 1.25fr; gap: 22px; min-height: 0; }
+  .ladder { position: relative; min-height: 640px; }
+  .axis { position: absolute; left: 150px; top: 56px; bottom: 30px; width: 4px; background: rgba(237,227,209,.25); }
+  .mark { position: absolute; left: 0; right: 0; display: flex; align-items: center; gap: 14px; transform: translateY(-50%); }
+  .mark .v { width: 130px; text-align: right; font: 800 30px var(--display); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+  .mark .tick { width: 22px; height: 4px; background: var(--paper); margin-left: 4px; }
+  .mark .n { font: 600 13px var(--mono); letter-spacing: .12em; text-transform: uppercase; }
+  .mark.strike .v { text-decoration: line-through; text-decoration-color: var(--rust); text-decoration-thickness: 4px; }
+  .puck { position: absolute; left: 134px; width: 36px; height: 36px; background: var(--rust); border: 3px solid var(--paper); transform: translateY(-50%); }
+  .side { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+  .listing { display: grid; grid-template-columns: 120px 1fr; gap: 16px; align-items: center; }
+  .bike { width: 120px; height: 96px; }
+  .chat { display: flex; flex-direction: column; gap: 12px; }
+  .msg { align-self: flex-end; max-width: 88%; background: var(--purple); color: #fff; padding: 12px 14px; font-size: 17px; line-height: 1.35; box-shadow: 4px 4px 0 var(--ink); }
+  .msg .who { display: block; font: 600 11px var(--mono); letter-spacing: .12em; opacity: .8; margin-bottom: 4px; }
+  .msg.seller { align-self: flex-start; background: var(--card); color: var(--ink); border: 2px solid var(--ink); }
+  .saves { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  @media (max-width: 900px) { .main { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="board">
+  <div class="bar">
+    <span class="dots"><i></i><i></i><i></i></span>
+    <h1>“$650 firm” → three messages from Claude</h1>
+    <span class="tag">Hack 05 · Claude</span>
+    <button class="replay" type="button">Play again</button>
+  </div>
+  <div class="main">
+    <div class="panel dark ladder" id="ladder">
+      <span class="label">The price ladder</span>
+      <div class="axis"></div><div class="mono" style="position:absolute;left:118px;top:150px;color:rgba(237,227,209,.55)">≈</div>
+    </div>
+    <div class="side">
+      <div class="panel listing">
+        <svg class="bike" viewBox="0 0 120 96" aria-hidden="true">
+          <rect x="0" y="0" width="120" height="96" fill="#1E1C18"/>
+          <circle cx="34" cy="70" r="16" fill="none" stroke="#EDE3D1" stroke-width="4"/>
+          <path d="M34 70 L60 36 L86 70 M60 36 L56 22 M48 22 L66 22 M60 36 L92 30 L96 18" stroke="#EDE3D1" stroke-width="5" fill="none" stroke-linecap="square"/>
+          <rect x="88" y="10" width="22" height="14" fill="#A33E17"/>
+          <rect x="18" y="84" width="84" height="5" fill="#EDE3D1"/>
+        </svg>
+        <div>
+          <span class="label muted">Facebook Marketplace · up 26 days</span>
+          <div class="big">Peloton Bike + shoes + mat</div>
+          <div class="mono" style="margin-top:6px">Listed <span class="rust">$650 firm</span> · new $1,445</div>
+        </div>
+      </div>
+      <div class="panel chat" id="chat">
+        <div class="msg"><span class="who">OPENING · YOU</span>…since it's been up for a few weeks, would you take <b>$475</b>?</div>
+        <div class="msg"><span class="who">COUNTER 1 · YOU</span>I can meet you at <b>$525</b> cash and work around your schedule.</div>
+        <div class="msg"><span class="who">COUNTER 2 · YOUR FINAL</span><b>$575</b> cash is the most I can do. I can come get it this weekend.</div>
+      </div>
+      <div class="saves">
+        <div class="panel"><span class="label muted">If they take the opener</span><div class="big rust" id="s1">$0</div></div>
+        <div class="panel"><span class="label muted">At your final</span><div class="big rust" id="s2">$0</div></div>
+        <div class="panel"><span class="label muted">Under new</span><div class="big" id="s3">0%</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span class="mono">Offers written by Claude, Nov 13, 2026 · you send the messages</span><span class="mono">AI for the Rest of Us</span></div>
+</div>
+<script src="kit.js"></script>
+<script>
+  const lad = document.getElementById("ladder");
+  const yTop = 70, yBot = 610, lo = 400, hi = 1500;
+  // broken axis: "new" sits alone up top, the haggle range ($450–$700) gets the room
+  const y = (v) => v > 1000 ? yTop + 20 : yBot - ((v - 450) / (700 - 450)) * (yBot - yTop - 150);
+  const marks = [[1445, "New, from Peloton", ""], [650, "Listed “firm”", "strike"], [575, "Your final", ""], [525, "Counter 1", ""], [475, "Opening offer", ""]];
+  const els = marks.map(([v, n, c]) => {
+    const d = document.createElement("div"); d.className = "mark " + c; d.style.top = y(v) + "px";
+    d.innerHTML = `<span class="v">${K.money(v)}</span><span class="tick"></span><span class="n">${n}</span>`; lad.appendChild(d); return d;
+  });
+  const puck = document.createElement("div"); puck.className = "puck"; lad.appendChild(puck);
+  const msgs = [...document.querySelectorAll(".msg")];
+  const $ = (id) => document.getElementById(id);
+  K.length(8.5);
+  K.tick((t) => {
+    K.rise(els[0], t, 0.2); K.rise(els[1], t, 0.5);
+    els[1].classList.toggle("strike", t > 1.4);
+    K.rise(els[4], t, 1.6); K.rise(els[3], t, 3.0); K.rise(els[2], t, 4.2);
+    // puck: lands on asking, then follows each offer
+    const stops = [[0.5, 650], [1.6, 475], [3.0, 525], [4.2, 575]];
+    let v = 650;
+    stops.forEach(([t0, val], i) => { if (i === 0) return; const k = K.inOut(K.p(t, t0, 0.7)); if (t >= t0) v = K.lerp(stops[i - 1][1], val, k); });
+    puck.style.top = y(v) + "px"; puck.style.opacity = K.p(t, 0.5, 0.3);
+    [1.6, 3.0, 4.2].forEach((t0, i) => K.rise(msgs[i], t, t0, 20, 0.45));
+    K.count($("s1"), t, 5.2, 1.0, 0, 175, (x) => K.money(Math.round(x)));
+    K.count($("s2"), t, 5.5, 1.0, 0, 75, (x) => K.money(Math.round(x)));
+    K.count($("s3"), t, 5.8, 1.0, 0, 60, (x) => Math.round(x) + "%");
+  });
+</script>
+</body>
+</html>

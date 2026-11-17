@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>October, Sorted</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="kit.css">
+<style>
+  .main { display: grid; grid-template-columns: 1.1fr 1fr; gap: 22px; min-height: 0; }
+  .donut { display: grid; grid-template-columns: 340px 1fr; gap: 22px; align-items: center; }
+  .donut svg { width: 100%; height: auto; }
+  .legend { display: flex; flex-direction: column; gap: 3px; font-size: 15px; }
+  .lg { display: grid; grid-template-columns: 14px 1fr auto; gap: 10px; align-items: center; padding: 3px 0; }
+  .lg i { width: 14px; height: 14px; display: block; }
+  .lg span:last-child { font: 600 14px var(--mono); font-variant-numeric: tabular-nums; }
+  .flags { display: flex; flex-direction: column; gap: 14px; }
+  .flag { display: grid; grid-template-columns: 1fr auto; gap: 6px 14px; align-items: end; }
+  .flag b { font-size: 19px; }
+  .flag .save { font: 800 24px var(--display); color: var(--teal); font-variant-numeric: tabular-nums; }
+  .flag .barwrap { grid-column: 1 / -1; height: 18px; background: rgba(30,28,24,.08); border: 2px solid var(--ink); position: relative; }
+  .flag .barwrap div { position: absolute; inset: 0 auto 0 0; background: var(--rust); }
+  @media (max-width: 900px) { .main, .donut { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="board">
+  <div class="bar">
+    <span class="dots"><i></i><i></i><i></i></span>
+    <h1>One month of a bank statement → a real budget</h1>
+    <span class="chip rust">Sample data</span>
+    <span class="tag">Hack 08 · Claude</span>
+    <button class="replay" type="button">Play again</button>
+  </div>
+  <div class="main">
+    <div class="panel donut">
+      <svg id="d" viewBox="-170 -170 340 340" aria-label="Spending by category"></svg>
+      <div class="legend" id="legend"></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:18px;min-width:0">
+      <div class="panel dark">
+        <span class="label">Freed up if you fix three things</span>
+        <div class="hero-num" id="hero" style="color:#EDE3D1">$0</div>
+        <div class="mono" style="margin-top:6px">≈ $400–475 a month</div>
+      </div>
+      <div class="panel flags" id="flags">
+        <span class="label muted">Where it's leaking</span>
+        <div class="flag"><b>Delivery &amp; dining out · $269</b><span class="save">$120–150/mo</span><span class="barwrap"><div></div></span></div>
+        <div class="flag"><b>Amazon &amp; Target · $369</b><span class="save">≈ $185/mo</span><span class="barwrap"><div></div></span></div>
+        <div class="flag"><b>Phone &amp; 5 streaming services · $294</b><span class="save">$100–140/mo</span><span class="barwrap"><div></div></span></div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span class="mono">30 sample transactions, categorized by Claude, Nov 13, 2026 · not a real account</span><span class="mono">AI for the Rest of Us</span></div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script src="kit.js"></script>
+<script>
+  const cats = [["Housing", 1842.00, "#1E1C18"], ["Groceries", 765.36, "#1F6B55"], ["Shopping", 369.12, "#A33E17"], ["Auto insurance", 248.00, "#6B6255"], ["Utilities", 247.91, "#8C8170"], ["Dining & delivery", 240.09, "#C4572B"], ["Phone", 212.80, "#5B4AA8"], ["Gas", 119.60, "#A89C88"], ["Streaming", 80.95, "#7D6FC0"], ["Coffee", 28.80, "#D9875F"], ["Fitness", 24.99, "#B9AE9B"]];
+  const total = 4179.62;
+  const pie = d3.pie().value((d) => d[1]).sort(null)(cats);
+  const arc = d3.arc().innerRadius(100).outerRadius(160);
+  const g = d3.select("#d");
+  const segs = g.selectAll("path").data(pie).join("path").attr("fill", (d) => d.data[2]).attr("stroke", "#F7F1E6").attr("stroke-width", 2);
+  const tTot = g.append("text").attr("text-anchor", "middle").attr("y", 10).attr("font-family", "Archivo").attr("font-weight", 800).attr("font-size", 38).attr("fill", "#1E1C18");
+  g.append("text").text("OCTOBER").attr("text-anchor", "middle").attr("y", -26).attr("font-family", "IBM Plex Mono").attr("font-weight", 600).attr("font-size", 13).attr("letter-spacing", 2).attr("fill", "#6B6255");
+  g.append("text").text("30 CHARGES").attr("text-anchor", "middle").attr("y", 40).attr("font-family", "IBM Plex Mono").attr("font-weight", 600).attr("font-size", 13).attr("letter-spacing", 2).attr("fill", "#6B6255");
+  const leg = document.getElementById("legend");
+  const lgs = cats.map(([n, v, c]) => { const r = document.createElement("div"); r.className = "lg"; r.innerHTML = `<i style="background:${c}"></i><span>${n}</span><span>${K.money(v, 0)}</span>`; leg.appendChild(r); return r; });
+  const flags = [...document.querySelectorAll(".flag")];
+  const widths = [269, 369, 294];
+  K.length(8.5);
+  K.tick((t) => {
+    const sweep = K.inOut(K.p(t, 0.3, 2.4)) * 2 * Math.PI;
+    segs.attr("d", (d) => { const s = Math.min(d.startAngle, sweep), e = Math.min(d.endAngle, sweep); return e > s ? arc({ ...d, startAngle: s, endAngle: e }) : null; });
+    tTot.text(K.money(Math.round(total * K.out(K.p(t, 0.3, 2.4)))));
+    lgs.forEach((r, i) => K.rise(r, t, 0.5 + i * 0.18, 10, 0.35));
+    flags.forEach((f, i) => { const t0 = 3.0 + i * 0.6; K.rise(f, t, t0, 16); f.querySelector(".barwrap div").style.width = (widths[i] / 400) * 100 * K.out(K.p(t, t0 + 0.2, 0.7)) + "%"; });
+    K.count(document.getElementById("hero"), t, 5.0, 1.6, 0, 5000, (v) => "≈" + K.money(Math.round(v / 10) * 10) + "/yr");
+  });
+</script>
+</body>
+</html>

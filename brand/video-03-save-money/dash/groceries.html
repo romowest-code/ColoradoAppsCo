@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Five Dinners for Sixty Dollars</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="kit.css">
+<style>
+  .main { display: grid; grid-template-columns: 1.5fr 1fr; gap: 22px; min-height: 0; }
+  .left { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+  .week { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+  .day { background: var(--card); border: 2px solid var(--ink); box-shadow: 5px 5px 0 var(--ink); padding: 14px 14px 16px; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+  .day .d { font: 600 12px var(--mono); letter-spacing: .14em; color: var(--rust); }
+  .day b { font-size: 22px; line-height: 1.05; letter-spacing: -.02em; }
+  .day .sale { margin-top: auto; }
+  .have { display: flex; flex-wrap: wrap; gap: 8px; }
+  .have .chip { background: var(--teal); }
+  .receipt { background: #FBF8F1; border: 2px solid var(--ink); box-shadow: 6px 6px 0 var(--ink); padding: 18px 20px; font: 500 14px var(--mono); display: flex; flex-direction: column; min-width: 0; overflow: hidden; }
+  .receipt h2 { font: 800 22px var(--display); margin: 0 0 4px; letter-spacing: -.01em; }
+  .line { display: grid; grid-template-columns: 1fr auto; gap: 10px; padding: 4px 0; border-bottom: 1px dashed var(--line); }
+  .line span:last-child { font-variant-numeric: tabular-nums; }
+  .tot { display: grid; grid-template-columns: 1fr auto; padding-top: 10px; margin-top: 6px; border-top: 2px solid var(--ink); font-weight: 600; }
+  .hero { display: flex; align-items: flex-end; gap: 28px; flex-wrap: wrap; }
+  @media (max-width: 900px) { .main { grid-template-columns: 1fr; } .week { grid-template-columns: repeat(2, 1fr); } }
+</style>
+</head>
+<body>
+<div class="board">
+  <div class="bar">
+    <span class="dots"><i></i><i></i><i></i></span>
+    <h1>This week's sale ad → five dinners for four</h1>
+    <span class="tag">Hack 02 · Claude</span>
+    <button class="replay" type="button">Play again</button>
+  </div>
+  <div class="main">
+    <div class="left">
+      <div class="panel hero">
+        <div><span class="label muted">Whole week, family of 4</span><div class="hero-num rust" id="hero">$0</div></div>
+        <div><span class="label muted">Per plate</span><div class="big" id="plate">$0.00</div></div>
+        <div><span class="label muted">Store</span><div class="big">King Soopers</div><div class="mono muted">Ad Nov 11–17</div></div>
+      </div>
+      <div class="week" id="week">
+        <div class="day"><span class="d">MON</span><b>Carnitas tacos, black beans &amp; rice</b><span class="chip rust sale">Pork shoulder $2.49/lb</span></div>
+        <div class="day"><span class="d">TUE</span><b>Spaghetti with beef &amp; veggie sauce</b><span class="chip rust sale">Pasta sauce $1.69</span></div>
+        <div class="day"><span class="d">WED</span><b>Skillet chicken pot pie, biscuit top</b><span class="chip rust sale">Chicken $2.49/lb</span></div>
+        <div class="day"><span class="d">THU</span><b>Carnitas fried rice</b><span class="chip rust sale">Leftover pork</span></div>
+        <div class="day"><span class="d">FRI</span><b>Breakfast for dinner</b><span class="chip rust sale">Bacon $3.99</span></div>
+      </div>
+      <div class="panel">
+        <span class="label">Already in the fridge and pantry</span>
+        <div class="have" id="have" style="margin-top:10px">
+          <span class="chip">Eggs</span><span class="chip">Rice</span><span class="chip">Black beans</span><span class="chip">Cheddar</span><span class="chip">Tortillas</span><span class="chip">Onions</span><span class="chip">Garlic</span><span class="chip">Frozen peas</span><span class="chip">Pasta</span>
+        </div>
+      </div>
+    </div>
+    <div class="receipt" id="receipt">
+      <h2>Shopping list</h2>
+      <span class="label muted" style="margin-bottom:8px">Sale prices · Shopper's Card</span>
+      <div id="lines"></div>
+      <div class="tot"><span>Sale subtotal</span><span id="sub">$0.00</span></div>
+      <div class="tot" style="border-top:0;padding-top:4px"><span>+ limes, soy sauce, spices</span><span>≈ $58–62</span></div>
+    </div>
+  </div>
+  <div class="foot"><span class="mono">Meal plan by Claude from this week's ad (third-party ad sites) · Nov 13, 2026 · prices vary by store</span><span class="mono">AI for the Rest of Us</span></div>
+</div>
+<script src="kit.js"></script>
+<script>
+  const items = [["Pork shoulder, ~4 lb", 9.96], ["Chicken breasts, ~2.5 lb", 6.23], ["93% lean ground beef", 6.99], ["Farmland bacon", 3.99], ["Honeycrisp apples, ~3 lb", 5.97], ["Avocados ×3", 2.64], ["Cilantro", 0.99], ["Carrots", 1.99], ["Pasta sauce ×2", 3.38], ["Heinz gravy ×2", 4.00], ["Pillsbury Grands ×2", 3.58], ["Shredded parmesan", 1.29], ["Sour cream", 1.67], ["Broth, 32 oz", 1.49]];
+  const box = document.getElementById("lines");
+  const els = items.map(([n, v]) => { const d = document.createElement("div"); d.className = "line"; d.innerHTML = `<span>${n}</span><span>${K.money(v, 2)}</span>`; box.appendChild(d); return d; });
+  const days = [...document.querySelectorAll(".day")], have = [...document.querySelectorAll("#have .chip")];
+  const $ = (id) => document.getElementById(id);
+  K.length(8.5);
+  K.tick((t) => {
+    days.forEach((d, i) => {
+      const k = K.p(t, 0.3 + i * 0.32, 0.6);
+      d.style.opacity = K.clamp(k * 2);
+      d.style.transform = `perspective(700px) rotateY(${(1 - K.out(k)) * -80}deg)`;
+    });
+    have.forEach((c, i) => K.pop(c, t, 1.9 + i * 0.07, 0.35));
+    let sum = 0;
+    els.forEach((e, i) => { const t0 = 2.3 + i * 0.22; K.rise(e, t, t0, 12, 0.3); if (t >= t0 + 0.15) sum += items[i][1]; });
+    $("sub").textContent = K.money(sum, 2);
+    K.count($("hero"), t, 5.6, 1.2, 0, 60, (v) => "≈" + K.money(Math.round(v)));
+    K.count($("plate"), t, 6.2, 1.0, 0, 3, (v) => K.money(v, 2));
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Xfinity Retention Call</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="kit.css">
+<style>
+  .main { display: grid; grid-template-columns: 1fr 1.25fr; gap: 22px; min-height: 0; }
+  .left { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+  .bars { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; align-items: end; height: 330px; padding-top: 10px; }
+  .col { display: flex; flex-direction: column; justify-content: flex-end; gap: 8px; height: 100%; }
+  .col .b { background: var(--rust); border: 2px solid var(--ink); box-shadow: 5px 5px 0 var(--ink); }
+  .col.c .b { background: var(--teal); }
+  .col .v { font: 800 44px var(--display); letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+  .script { display: flex; flex-direction: column; gap: 10px; }
+  .ln { display: grid; grid-template-columns: 34px 1fr; gap: 12px; padding: 12px 14px; border: 2px solid transparent; }
+  .ln .n { font: 800 22px var(--display); color: var(--muted); }
+  .ln .w { font: 600 12px var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+  .ln q { display: block; font-size: 19px; line-height: 1.35; margin-top: 4px; quotes: "“" "”"; }
+  .ln.on { background: var(--ink); color: var(--paper); border-color: var(--ink); box-shadow: 5px 5px 0 var(--rust); }
+  .ln.on .n, .ln.on .w { color: var(--rust); }
+  @media (max-width: 900px) { .main { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="board">
+  <div class="bar">
+    <span class="dots"><i></i><i></i><i></i></span>
+    <h1>The retention call, word for word</h1>
+    <span class="tag">Hack 13 · Claude</span>
+    <button class="replay" type="button">Play again</button>
+  </div>
+  <div class="main">
+    <div class="left">
+      <div class="panel">
+        <span class="label muted">Monthly internet bill</span>
+        <div class="bars">
+          <div class="col"><span class="v" id="v1">$0</span><div class="b" id="b1"></div><span class="mono">Xfinity · 400 Mbps</span></div>
+          <div class="col c"><span class="v" id="v2">$0</span><div class="b" id="b2"></div><span class="mono">Competitor · 500 Mbps</span></div>
+        </div>
+      </div>
+      <div class="panel dark">
+        <span class="label">The gap you're calling about</span>
+        <div class="hero-num" id="hero" style="color:#EDE3D1">$0</div>
+        <div class="mono" style="margin-top:6px">$60 a month · example numbers</div>
+      </div>
+    </div>
+    <div class="panel script" id="script">
+      <span class="label muted">Read it off your phone</span>
+      <div class="ln"><span class="n">1</span><span><span class="w">Open</span><q>I've been with Xfinity for six years and I'm paying $115 a month. A competitor offers 500 Mbps at my address for $55. What can you do?</q></span></div>
+      <div class="ln"><span class="n">2</span><span><span class="w">Then stop talking</span><q>Let them answer.</q></span></div>
+      <div class="ln"><span class="n">3</span><span><span class="w">Small discount offered</span><q>I need to be at $55 to $60. Is there anyone who can do better?</q></span></div>
+      <div class="ln"><span class="n">4</span><span><span class="w">Upsell pitched</span><q>No thanks, I only want internet.</q></span></div>
+      <div class="ln"><span class="n">5</span><span><span class="w">Before you say yes</span><q>Total with fees? How long does it last? Contract? Send it in writing.</q></span></div>
+    </div>
+  </div>
+  <div class="foot"><span class="mono">Script written by Claude, Nov 13, 2026 · don't cancel until the new service is scheduled</span><span class="mono">AI for the Rest of Us</span></div>
+</div>
+<script src="kit.js"></script>
+<script>
+  const lns = [...document.querySelectorAll(".ln")];
+  const $ = (id) => document.getElementById(id);
+  K.length(8.5);
+  K.tick((t) => {
+    const h = 250;
+    $("b1").style.height = h * K.out(K.p(t, 0.3, 1.0)) + "px";
+    $("b2").style.height = h * (55 / 115) * K.out(K.p(t, 0.8, 1.0)) + "px";
+    K.count($("v1"), t, 0.3, 1.0, 0, 115, (v) => K.money(Math.round(v)));
+    K.count($("v2"), t, 0.8, 1.0, 0, 55, (v) => K.money(Math.round(v)));
+    K.count($("hero"), t, 1.8, 1.6, 0, 720, (v) => K.money(Math.round(v)) + "/yr");
+    lns.forEach((l, i) => { const t0 = 1.6 + i * 1.0; K.rise(l, t, t0, 14); l.classList.toggle("on", t >= t0 && (t < t0 + 1.0 || i === lns.length - 1)); });
+  });
+</script>
+</body>
+</html>

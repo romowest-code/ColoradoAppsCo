@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Open Settlement Claims</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="kit.css">
+<style>
+  .main { display: grid; grid-template-rows: auto auto; align-content: start; gap: 22px; min-height: 0; }
+  .top { display: grid; grid-template-columns: 1fr 2.4fr; gap: 22px; }
+  .tl { position: relative; height: 300px; }
+  .line { position: absolute; left: 30px; right: 30px; top: 160px; height: 4px; background: rgba(237,227,209,.3); }
+  .prog { position: absolute; left: 30px; top: 160px; height: 4px; background: var(--rust); }
+  .pin { position: absolute; top: 160px; transform: translate(-50%, -50%); }
+  .pin i { display: block; width: 22px; height: 22px; background: var(--rust); border: 3px solid var(--paper); }
+  .pin.open i { background: transparent; border-color: var(--paper); border-style: dashed; }
+  .pin .lab { position: absolute; left: 50%; transform: translateX(-50%); white-space: nowrap; text-align: center; font: 600 12px var(--mono); letter-spacing: .08em; color: var(--paper); }
+  .pin .lab.up { bottom: 30px; } .pin .lab.dn { top: 30px; } .pin .lab.up2 { bottom: 78px; } .pin .lab.dn2 { top: 78px; }
+  .pin .lab b { display: block; font: 800 18px var(--display); letter-spacing: -.01em; }
+  .ends { position: absolute; top: 272px; font: 600 12px var(--mono); letter-spacing: .1em; color: rgba(237,227,209,.7); }
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .cl { display: flex; flex-direction: column; gap: 6px; }
+  .cl .amt { font: 800 30px var(--display); letter-spacing: -.02em; color: var(--rust); }
+  .cl b { font-size: 19px; }
+  .cl p { margin: 0; font-size: 15px; line-height: 1.4; color: var(--muted); }
+  .cl.unconf { border-style: dashed; box-shadow: none; }
+  @media (max-width: 900px) { .top, .cards { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="board">
+  <div class="bar">
+    <span class="dots"><i></i><i></i><i></i></span>
+    <h1>Class action money · open now · no receipt</h1>
+    <span class="tag">Hack 10 · Claude</span>
+    <button class="replay" type="button">Play again</button>
+  </div>
+  <div class="main">
+    <div class="top">
+      <div class="panel">
+        <span class="label muted">Confirmed on the official sites</span>
+        <div class="hero-num rust" id="hero">0</div>
+        <div class="mono" style="margin-top:8px">+ 2 more reported · sites wouldn't load</div>
+      </div>
+      <div class="panel dark tl" id="tl">
+        <span class="label">Claim deadlines · next 60 days</span>
+        <div class="line"></div><div class="prog" id="prog"></div>
+        <span class="ends" style="left:24px">NOV 13</span><span class="ends" style="right:24px">JAN 12</span>
+      </div>
+    </div>
+    <div class="cards" id="cards">
+      <div class="panel cl"><span class="chip rust" style="align-self:flex-start">Nov 16</span><b>CVS digital privacy</b><span class="amt">Up to $5</span><p>Used cvs.com or the CVS app in the U.S. before July 27, 2026. No proof needed.</p></div>
+      <div class="panel cl"><span class="chip rust" style="align-self:flex-start">Nov 27</span><b>Dr. Squatch “natural” labels</b><span class="amt">Up to $2.50</span><p>Bought covered products 2018–2026. Up to $12.50 with receipts.</p></div>
+      <div class="panel cl unconf"><span class="chip" style="align-self:flex-start">Dec 21 · reported</span><b>Apple Siri settlement</b><span class="amt">$25 per device</span><p>iPhone 15 Pro and iPhone 16 owners. Needs the serial number, not a receipt. Up to $95.</p></div>
+    </div>
+  </div>
+  <div class="foot"><span class="mono">Found by Claude on Nov 13, 2026 · deadlines pass · confirm on the official settlement site before filing</span><span class="mono">AI for the Rest of Us</span></div>
+</div>
+<script src="kit.js"></script>
+<script>
+  const start = Date.UTC(2026, 10, 13), endD = Date.UTC(2027, 0, 12);
+  const pins = [["CVS", Date.UTC(2026, 10, 16), "Up to $5", "up", 1], ["LSC lab breach", Date.UTC(2026, 10, 24), "Pro rata", "dn", 1], ["Skin360 · IL", Date.UTC(2026, 10, 25), "Pro rata", "up2", 1], ["Dr. Squatch", Date.UTC(2026, 10, 27), "$2.50", "dn2", 1], ["Apple Siri", Date.UTC(2026, 11, 21), "$25/device", "up", 0], ["GoodRx", Date.UTC(2026, 11, 29), "Reported", "dn", 0]];
+  const tl = document.getElementById("tl");
+  const x = (d) => `calc(30px + (100% - 60px) * ${(d - start) / (endD - start)})`;
+  const els = pins.map(([n, d, a, pos, conf]) => {
+    const p = document.createElement("div"); p.className = "pin" + (conf ? "" : " open"); p.style.left = x(d);
+    const day = new Date(d).toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "UTC" }).toUpperCase();
+    p.innerHTML = `<i></i><span class="lab ${pos}"><b>${n}</b>${day} · ${a}</span>`; tl.appendChild(p); return p;
+  });
+  const cards = [...document.querySelectorAll(".cl")];
+  const $ = (id) => document.getElementById(id);
+  K.length(8.5);
+  K.tick((t) => {
+    const k = K.inOut(K.p(t, 0.3, 3.4));
+    $("prog").style.width = `calc((100% - 60px) * ${k})`;
+    els.forEach((e, i) => { const at = 0.3 + 3.4 * ((pins[i][1] - start) / (endD - start)); K.pop(e.querySelector("i"), t, at, 0.4); K.rise(e.querySelector(".lab"), t, at + 0.1, 10, 0.4); });
+    K.count($("hero"), t, 0.6, 2.0, 0, 4, (v) => Math.round(v) + " open");
+    cards.forEach((c, i) => K.rise(c, t, 4.2 + i * 0.4));
+  });
+</script>
+</body>
+</html>

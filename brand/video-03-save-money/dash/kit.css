@@ -1,0 +1,97 @@
+/* 13 AI Hacks · shared look. Layout: a 16:9 board on paper, a dark title bar, one hero number, one moving picture. */
+:root {
+  --paper: #EDE3D1;
+  --card: #F7F1E6;
+  --ink: #1E1C18;
+  --rust: #A33E17;
+  --teal: #1F6B55;
+  --purple: #5B4AA8;
+  --muted: #6B6255;
+  --line: rgba(30, 28, 24, 0.14);
+  --display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--display);
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  background-image: radial-gradient(rgba(30, 28, 24, 0.13) 1.4px, transparent 1.6px);
+  background-size: 28px 28px;
+}
+.board {
+  min-height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 22px;
+  padding-block: 22px 18px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  max-width: 1600px;
+  margin: 0 auto;
+}
+.bar {
+  background: var(--ink);
+  color: var(--paper);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 18px;
+  box-shadow: 6px 6px 0 var(--rust);
+  flex-wrap: wrap;
+}
+.bar .dots { display: flex; gap: 7px; }
+.bar .dots i { width: 11px; height: 11px; display: block; background: var(--paper); opacity: .35; }
+.bar .dots i:first-child { background: var(--rust); opacity: 1; }
+.bar h1 { margin: 0; font-size: clamp(20px, 2.1vw, 30px); font-weight: 800; letter-spacing: -0.02em; text-wrap: balance; }
+.bar .tag { margin-left: auto; }
+.label, .tag, .mono {
+  font-family: var(--mono);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.tag { padding: 5px 10px; border: 2px solid currentColor; }
+.panel {
+  background: var(--card);
+  border: 2px solid var(--ink);
+  box-shadow: 6px 6px 0 var(--ink);
+  padding: 20px 22px;
+  min-width: 0;
+}
+.panel.dark { background: var(--ink); color: var(--paper); box-shadow: 6px 6px 0 var(--rust); }
+.hero-num {
+  font-weight: 800;
+  font-size: clamp(56px, 7vw, 116px);
+  line-height: .9;
+  letter-spacing: -0.045em;
+  font-variant-numeric: tabular-nums;
+}
+.big { font-weight: 800; font-size: clamp(30px, 3.2vw, 52px); letter-spacing: -0.03em; line-height: 1; font-variant-numeric: tabular-nums; }
+.rust { color: var(--rust); }
+.teal { color: var(--teal); }
+.purple { color: var(--purple); }
+.muted { color: var(--muted); }
+.chip { display: inline-block; font-family: var(--mono); font-weight: 600; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; padding: 4px 8px; color: var(--paper); background: var(--ink); }
+.chip.rust { background: var(--rust); color: var(--paper); }
+.chip.teal { background: var(--teal); color: var(--paper); }
+.chip.purple { background: var(--purple); color: var(--paper); }
+.foot { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; color: var(--muted); }
+.foot .mono { font-size: 11px; }
+button.replay {
+  font: 600 12px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase;
+  background: var(--paper); color: var(--ink); border: 2px solid var(--paper); padding: 7px 10px; cursor: pointer;
+}
+button.replay:hover { background: var(--rust); border-color: var(--rust); color: var(--paper); }
+button.replay:focus-visible { outline: 3px solid var(--rust); outline-offset: 2px; }
+.rec button.replay { visibility: hidden; }
+.sq { display: inline-block; width: 10px; height: 10px; background: var(--rust); margin-right: 8px; vertical-align: 1px; }
+@media (max-width: 760px) {
+  .grid2, .grid3 { grid-template-columns: 1fr !important; }
+}

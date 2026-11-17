@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Washer Warranty Claim</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="kit.css">
+<style>
+  .main { display: grid; grid-template-columns: 1fr 1.2fr; gap: 22px; min-height: 0; }
+  .left { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+  .washer { display: grid; grid-template-columns: 200px 1fr; gap: 22px; align-items: center; }
+  .lcd { background: #10140F; border: 3px solid #3A332B; padding: 10px 14px; font: 600 64px var(--mono); color: #FF5A2A; letter-spacing: .08em; text-shadow: 0 0 18px rgba(255,90,42,.7); text-align: center; }
+  .months { display: grid; grid-template-columns: repeat(12, 1fr); gap: 4px; margin-top: 12px; }
+  .months i { height: 34px; background: rgba(237,227,209,.18); display: block; }
+  .months i.on { background: var(--teal); }
+  .months i.now { background: var(--rust); }
+  .mlab { display: flex; justify-content: space-between; margin-top: 6px; }
+  .steps { display: flex; flex-direction: column; gap: 10px; }
+  .step { display: grid; grid-template-columns: 34px 1fr auto; gap: 12px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 18px; font-weight: 600; }
+  .box { width: 30px; height: 30px; border: 2px solid var(--ink); display: grid; place-items: center; font: 800 18px var(--display); color: var(--paper); }
+  .box.done { background: var(--teal); border-color: var(--teal); }
+  .box.you { background: var(--purple); border-color: var(--purple); }
+  .email { font-size: 16px; line-height: 1.5; }
+  .email .subj { font-weight: 800; font-size: 19px; border-bottom: 2px solid var(--ink); padding-bottom: 8px; margin-bottom: 10px; min-height: 1.4em; }
+  .caret { display: inline-block; width: 2px; height: 1.1em; background: var(--rust); vertical-align: -3px; margin-left: 2px; }
+  @media (max-width: 900px) { .main { grid-template-columns: 1fr; } .washer { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="board">
+  <div class="bar">
+    <span class="dots"><i></i><i></i><i></i></span>
+    <h1>Washer won't drain → claim it before the warranty runs out</h1>
+    <span class="tag">Hack 06 · Claude</span>
+    <button class="replay" type="button">Play again</button>
+  </div>
+  <div class="main">
+    <div class="left">
+      <div class="panel dark washer">
+        <div>
+          <div class="lcd" id="lcd">5C</div>
+          <div class="mono" style="margin-top:8px;text-align:center">Drain error</div>
+        </div>
+        <div>
+          <span class="label">Samsung WF45T6000AW · bought at Lowe's</span>
+          <div class="big" style="margin-top:6px">Month <span id="mo">0</span> of 12</div>
+          <div class="months" id="months"></div>
+          <div class="mlab mono"><span>Purchase</span><span id="left" style="color:#F08A5D">Warranty ends</span></div>
+        </div>
+      </div>
+      <div class="panel">
+        <span class="label muted">Parts and labor if you file in time</span>
+        <div class="hero-num teal" id="hero">$0</div>
+        <div class="mono" style="margin-top:8px">1-year Samsung warranty · ask for written proof you filed in time</div>
+      </div>
+    </div>
+    <div class="panel" style="display:flex;flex-direction:column;gap:16px">
+      <div class="steps" id="steps">
+        <div class="step"><span class="box">✓</span><span>Receipt from Lowe's</span><span class="chip teal">Have it</span></div>
+        <div class="step"><span class="box">✓</span><span>Model number + error code 5C</span><span class="chip teal">Have it</span></div>
+        <div class="step"><span class="box">✓</span><span>Claim email written by Claude</span><span class="chip teal">Done</span></div>
+        <div class="step"><span class="box">→</span><span>Send it and get a ticket number</span><span class="chip purple">You</span></div>
+      </div>
+      <div class="email">
+        <div class="subj"><span id="subj"></span><span class="caret" id="caret"></span></div>
+        <div id="body"></div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span class="mono">Email drafted by Claude, Nov 13, 2026 · warranty terms per the prompt · confirm yours on Samsung's site</span><span class="mono">AI for the Rest of Us</span></div>
+</div>
+<script src="kit.js"></script>
+<script>
+  const months = document.getElementById("months");
+  const cells = Array.from({ length: 12 }, () => { const i = document.createElement("i"); months.appendChild(i); return i; });
+  const subj = "Warranty Service Request: WF45T6000AW Washer, 5C Drain Error";
+  const paras = [
+    "My Samsung front-load washer (model WF45T6000AW, serial [Serial Number]) has stopped draining and displays a 5C error code. I purchased it at Lowe's about 11 months ago, so it is covered under Samsung's 1-year parts and labor warranty.",
+    "Please schedule an in-home technician visit to repair the unit at no cost to me. Because my warranty expires soon, please open a service ticket now and confirm in writing that this claim was filed within the warranty period.",
+  ];
+  const body = document.getElementById("body");
+  const ps = paras.map((tx) => { const p = document.createElement("p"); p.style.margin = "0 0 10px"; body.appendChild(p); return p; });
+  const steps = [...document.querySelectorAll(".step")];
+  const $ = (id) => document.getElementById(id);
+  K.length(8.5);
+  K.tick((t) => {
+    $("lcd").style.opacity = t < 0.3 ? 0 : (Math.floor(t * 2.5) % 2 === 0 || t > 2.6 ? 1 : 0.15);
+    const m = Math.round(11 * K.out(K.p(t, 0.4, 1.6)));
+    $("mo").textContent = m;
+    cells.forEach((c, i) => { c.className = i < m - 1 ? "on" : i === m - 1 ? "now" : ""; });
+    K.rise($("left"), t, 2.0);
+    $("left").textContent = t > 2.0 ? "≈ 30 days left" : "Warranty ends";
+    steps.forEach((s, i) => {
+      K.rise(s, t, 1.2 + i * 0.4, 16);
+      const b = s.querySelector(".box");
+      b.className = "box" + (t > 1.6 + i * 0.4 ? (i === 3 ? " you" : " done") : "");
+    });
+    const n = Math.floor(subj.length * K.p(t, 2.8, 1.4));
+    $("subj").textContent = subj.slice(0, n);
+    $("caret").style.opacity = t > 2.6 && Math.floor(t * 3) % 2 === 0 ? 1 : 0;
+    ps.forEach((p, i) => { p.textContent = paras[i]; K.rise(p, t, 4.3 + i * 0.6, 14); });
+    K.count($("hero"), t, 5.6, 1.0, 999, 0, (v) => K.money(Math.round(v)));
+  });
+</script>
+</body>
+</html>

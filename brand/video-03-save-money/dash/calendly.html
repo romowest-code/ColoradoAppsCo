@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Booking Page Math</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="kit.css">
+<style>
+  .main { display: grid; grid-template-columns: 1.5fr 1fr; gap: 22px; min-height: 0; }
+  .opts { display: flex; flex-direction: column; gap: 22px; }
+  .opt { display: grid; grid-template-columns: 1fr auto; gap: 8px 14px; align-items: end; }
+  .opt b { font-size: 22px; }
+  .opt .yr { font: 800 34px var(--display); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+  .track { grid-column: 1 / -1; height: 30px; border: 2px solid var(--ink); background: rgba(30,28,24,.06); position: relative; }
+  .track div { position: absolute; inset: 0 auto 0 0; background: var(--ink); }
+  .opt.good .track div { background: var(--teal); }
+  .opt .chips { grid-column: 1 / -1; display: flex; gap: 8px; flex-wrap: wrap; }
+  @media (max-width: 900px) { .main { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="board">
+  <div class="bar">
+    <span class="dots"><i></i><i></i><i></i></span>
+    <h1>Do I need paid Calendly for one booking page?</h1>
+    <span class="tag">Bonus · Claude</span>
+    <button class="replay" type="button">Play again</button>
+  </div>
+  <div class="main">
+    <div class="panel opts" id="opts">
+      <span class="label muted">Cost per year · “Free estimate, 30 min”</span>
+      <div class="opt"><b>Stay on $16/mo Calendly</b><span class="yr" data-v="192">$0</span><span class="track"><div></div></span><span class="chips"><span class="chip teal">Reminder emails</span></span></div>
+      <div class="opt"><b>Calendly Standard, billed yearly</b><span class="yr" data-v="120">$0</span><span class="track"><div></div></span><span class="chips"><span class="chip teal">Reminder emails</span><span class="chip rust">Save $72</span></span></div>
+      <div class="opt good"><b>Free Google Calendar booking page</b><span class="yr" data-v="0">$0</span><span class="track"><div></div></span><span class="chips"><span class="chip">Confirmation only, no reminder</span><span class="chip rust">Save $192</span></span></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:18px">
+      <div class="panel dark">
+        <span class="label">Claude's straight answer</span>
+        <div class="big" style="margin-top:10px;color:#EDE3D1">Almost, but not quite.</div>
+        <p style="font-size:18px;line-height:1.45;margin:12px 0 0">Free Google gives you the booking page. It doesn't send the reminder email.</p>
+      </div>
+      <div class="panel">
+        <span class="label muted">Most you'd save a year</span>
+        <div class="hero-num rust" id="hero">$0</div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span class="mono">Answer from Claude with web search, Nov 13, 2026 · $16/mo is an example plan price</span><span class="mono">AI for the Rest of Us</span></div>
+</div>
+<script src="kit.js"></script>
+<script>
+  const opts = [...document.querySelectorAll(".opt")];
+  K.length(8.5);
+  K.tick((t) => {
+    opts.forEach((o, i) => {
+      const t0 = 0.3 + i * 0.7, v = +o.querySelector(".yr").dataset.v;
+      K.rise(o, t, t0, 16);
+      K.count(o.querySelector(".yr"), t, t0 + 0.2, 1.0, 0, v, (x) => K.money(Math.round(x)) + "/yr");
+      o.querySelector(".track div").style.width = Math.max(v === 0 ? 1.2 : 0, (v / 192) * 100) * K.out(K.p(t, t0 + 0.2, 1.0)) + "%";
+      o.querySelectorAll(".chip").forEach((c, j) => K.pop(c, t, t0 + 0.9 + j * 0.2, 0.35));
+    });
+    K.count(document.getElementById("hero"), t, 3.4, 1.4, 0, 192, (x) => K.money(Math.round(x)));
+  });
+</script>
+</body>
+</html>

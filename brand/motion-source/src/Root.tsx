@@ -10,8 +10,11 @@ import {
   MG4Prompt,
   MG4_DURATION,
 } from "./BudgetApp";
+import { SaveMoneyCut, BonusClip, BONUS_FRAMES } from "./SaveMoney";
+import { TOTAL_FRAMES } from "./SaveMoneyData";
 
 const HD = { fps: 60, width: 1920, height: 1080 };
+const HD30 = { fps: 30, width: 1920, height: 1080 };
 
 export const Root = () => (
   <>
@@ -27,5 +30,7 @@ export const Root = () => (
     <Composition id="Budget02Envelopes" component={MG2Envelopes} durationInFrames={MG2_DURATION} {...HD} />
     <Composition id="Budget03Compare" component={MG3Compare} durationInFrames={MG3_DURATION} {...HD} />
     <Composition id="Budget04Prompt" component={MG4Prompt} durationInFrames={MG4_DURATION} {...HD} />
+    <Composition id="SaveMoneyCut" component={SaveMoneyCut} durationInFrames={TOTAL_FRAMES} {...HD30} />
+    <Composition id="SaveMoneyBonusCalendly" component={BonusClip} durationInFrames={BONUS_FRAMES} {...HD30} />
   </>
 );
